@@ -12,7 +12,7 @@ def tap(text=None,classname=None):
  raise AssertionError('Control missing: '+str(text or classname)+' '+ET.tostring(root,encoding='unicode')[:5000])
 def assert_text(text):
  xml=ET.tostring(tree(),encoding='unicode');assert text in xml,xml[:5000]
-assert_text('Bakra Hisab');tap('Naya season');tap(classname='android.widget.EditText');adb('shell','input','text','Android-test');adb('shell','input','keyevent','4');time.sleep(1);tap('Preview');tap('Confirm aur save');assert_text('Android-test')
+print(adb('logcat','-d','-s','chromium'),flush=True);assert_text('Bakra Hisab');tap('Naya season');tap(classname='android.widget.EditText');adb('shell','input','text','Android-test');adb('shell','input','keyevent','4');time.sleep(1);tap('Preview');tap('Confirm aur save');assert_text('Android-test')
 adb('shell','am','force-stop','com.bakrahisab.app');adb('shell','am','start','-W','-n','com.bakrahisab.app/.MainActivity');time.sleep(3);assert_text('Android-test')
 adb('install','-r','Bakra-Hisab.apk');adb('shell','am','start','-W','-n','com.bakrahisab.app/.MainActivity');time.sleep(3);assert_text('Android-test')
 print('PASS: Android install, native local save, force-stop/reopen, update in place preserves season.')

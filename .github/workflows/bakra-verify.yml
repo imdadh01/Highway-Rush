@@ -2,7 +2,7 @@ name: Verify Bakra Hisab release
 on:
   push:
     branches: [bakra-hisab-app]
-    paths: ['bakra-hisab-dist/release-apk.base64', '.github/workflows/bakra-verify.yml']
+    paths: ['bakra-hisab-dist/release-apk.base64', '.github/workflows/bakra-verify.yml', 'validation/android_smoke.py']
 permissions:
   contents: write
 jobs:
@@ -40,6 +40,9 @@ jobs:
             adb install Bakra-Hisab.apk
             adb shell am start -W -n com.bakrahisab.app/.MainActivity
             sleep 8
+            adb shell screencap -p /sdcard/start.png
+            adb pull /sdcard/start.png android-start.png
+            base64 -w 0 android-start.png > bakra-hisab-dist/android-start.png.base64
             python3 validation/android_smoke.py
             base64 -w 0 android-screen.png > bakra-hisab-dist/android-screen.png.base64
       - uses: actions/upload-artifact@v4
@@ -47,6 +50,7 @@ jobs:
           name: Bakra-Hisab-1.0.0
           path: Bakra-Hisab.apk
       - name: Save Android verification screenshot
+        if: always()
         run: |
           git config user.name github-actions
           git config user.email github-actions@users.noreply.github.com
