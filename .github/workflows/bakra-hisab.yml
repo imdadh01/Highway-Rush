@@ -1,0 +1,43 @@
+name: Bakra Hisab Android
+on:
+  push:
+    branches: [bakra-hisab-app]
+    paths: ['bakra-hisab/**', '.github/workflows/bakra-hisab.yml']
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: android-actions/setup-android@v3
+        with:
+          packages: platform-tools
+          log-accepted-android-sdk-licenses: false
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.9'
+      - name: Check accounting
+        run: node bakra-hisab/tests/accounting.test.cjs
+      - name: Build APK
+        run: |
+          sdkmanager 'platforms;android-35' 'build-tools;34.0.0'
+          gradle -p bakra-hisab assembleRelease --no-daemon
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Bakra-Hisab-unsigned
+          path: bakra-hisab/app/build/outputs/apk/release/app-release-unsigned.apk
+      - name: Save unsigned build for signing
+        run: |
+          mkdir -p bakra-hisab-dist
+          base64 -w 0 bakra-hisab/app/build/outputs/apk/release/app-release-unsigned.apk > bakra-hisab-dist/unsigned-apk.base64
+          git config user.name github-actions
+          git config user.email github-actions@users.noreply.github.com
+          git add bakra-hisab-dist/unsigned-apk.base64
+          git commit -m 'Store unsigned Bakra Hisab build [skip ci]' || exit 0
+          git push origin HEAD:bakra-hisab-app

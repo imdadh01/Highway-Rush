@@ -1,0 +1,16 @@
+const assert=require('node:assert/strict'),E=require('../app/src/main/assets/engine.js');
+const d=E.newDB();d.current='s1';d.seasons=[{id:'s1',name:'Eid',opening:10000000,start:'2026-01-01'},{id:'s2',name:'Next',opening:0,start:'2027-01-01'}];
+const exp={id:'e1',season:'s1',date:'2026-01-02',total:800000,share:400000,paidByMe:800000,category:'Salary'};d.expenses.push(exp);
+assert.equal(E.summary(d,'s1').out,400000);assert.equal(E.summary(d,'s1').partner,400000);
+exp.paidByMe=0;assert.equal(E.summary(d,'s1').out,400000);assert.equal(E.summary(d,'s1').partner,-400000);
+d.partner.push({id:'p1',season:'s1',date:'2026-01-03',direction:'gave',amount:400000});assert.equal(E.summary(d,'s1').partner,0);assert.equal(E.summary(d,'s1').out,400000);assert.equal(E.ledger(d,'s1').length,2);
+d.goats.push({id:'g1',season:'s1',date:'2026-01-02',cost:2000000,paidByMe:2000000,tag:'B1'},{id:'g2',season:'s1',date:'2026-01-02',cost:1500000,paidByMe:1500000,tag:'B2'});
+d.sales.push({id:'sale1',season:'s1',date:'2026-01-05',goat:'g1',price:3000000,received:1000000,customer:'Test'});
+assert.equal(E.summary(d,'s1').profit,600000);assert.equal(E.summary(d,'s1').receivable,2000000);assert.equal(E.summary(d,'s1').stockValue,1500000);
+d.receipts.push({id:'r1',season:'s1',date:'2026-01-06',sale:'sale1',amount:2000000});assert.equal(E.summary(d,'s1').profit,600000);assert.equal(E.summary(d,'s1').receivable,0);assert.equal(E.summary(d,'s1').sales,3000000);assert.equal(E.summary(d,'s2').out,0);
+E.validate(d);assert.deepEqual(E.summary(JSON.parse(JSON.stringify(d)),'s1'),E.summary(d,'s1'));
+assert.throws(()=>E.remove(d,'sale','sale1'));assert.throws(()=>E.remove(d,'goat','g1'));
+d.receipts[0].amount++;assert.throws(()=>E.validate(d));d.receipts[0].amount--;
+E.remove(d,'receipt','r1');assert.equal(E.summary(d,'s1').receivable,2000000);
+assert.equal(E.money('10.05'),1005);assert.throws(()=>E.money('-1'));
+console.log('PASS: owner/partner salary, settlement exclusion, sales/receipts, profit, stock, season isolation, restore, deletion guards, overpayment, paisa.');
