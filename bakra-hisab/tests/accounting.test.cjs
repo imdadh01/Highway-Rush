@@ -14,3 +14,6 @@ d.receipts[0].amount++;assert.throws(()=>E.validate(d));d.receipts[0].amount--;
 E.remove(d,'receipt','r1');assert.equal(E.summary(d,'s1').receivable,2000000);
 assert.equal(E.money('10.05'),1005);assert.throws(()=>E.money('-1'));
 console.log('PASS: owner/partner salary, settlement exclusion, sales/receipts, profit, stock, season isolation, restore, deletion guards, overpayment, paisa.');
+const broken=JSON.parse(JSON.stringify(d));delete broken.goats[0].cost;assert.throws(()=>E.validate(broken));
+const edit=JSON.parse(JSON.stringify(d));edit.expenses[0].share=300000;edit.expenses[0].paidByMe=800000;assert.equal(E.summary(edit,'s1').out,E.summary(d,'s1').out-100000);assert.equal(E.summary(edit,'s1').partner,900000);E.remove(edit,'expense','e1');assert.equal(E.summary(edit,'s1').out,3500000);
+console.log('PASS: malformed restore rejected and edits/deletions recompute both ledgers.');

@@ -11,4 +11,13 @@ await click('form','receipt');await fill('amount','20000');await save();
 await page.reload();await page.getByRole('heading',{name:'Bakra Hisab',exact:true}).waitFor();
 await page.screenshot({path:'tmp/app/home.png',fullPage:true});await click('nav','cash');await page.screenshot({path:'tmp/app/cash.png',fullPage:true});
 for(const r of ['expenses','goats','reports','customers','employees','backup','settings']){await page.evaluate(r=>nav(r),r);if(await page.locator('body').evaluate(e=>e.scrollWidth>innerWidth))throw Error('Overflow '+r)}
-const result=await page.evaluate(()=>({summary:E.summary(db,db.current),entries:E.ledger(db,db.current).length}));if(result.summary.profit!==600000||result.summary.partner!==0||result.summary.receivable!==0)throw Error(JSON.stringify(result));if(errors.length)throw Error(errors.join('\n'));console.log('UI PASS',JSON.stringify(result));await browser.close();})();
+const result=await page.evaluate(()=>({summary:E.summary(db,db.current),entries:E.ledger(db,db.current).length}));if(result.summary.profit!==600000||result.summary.partner!==0||result.summary.receivable!==0)throw Error(JSON.stringify(result));const saved=await page.evaluate(()=>backupEnvelope());
+await page.evaluate(()=>nav('home'));await click('new-season').catch(async()=>{await click('seasons');await click('new-season')});await fill('name','Eid 2028');await save();
+if(await page.evaluate(()=>E.summary(db,db.current).sales)!==0)throw Error('Season isolation failed');
+await page.evaluate(s=>restorePreview(s),saved);await click('restore-confirm');
+if(await page.evaluate(()=>db.seasons.length)!==1)throw Error('Restore failed');
+await page.evaluate(()=>openForm('goat'));await fill('cost','12000');await fill('paidByMe','12000');
+await page.evaluate(()=>{const c=document.createElement('canvas');c.width=20;c.height=20;c.getContext('2d').fillRect(0,0,20,20);setPhoto('photo',c.toDataURL('image/jpeg'))});await save();
+await page.reload();if(!await page.evaluate(()=>db.goats.some(g=>g.photo)))throw Error('Photo persistence failed');
+await page.evaluate(()=>nav('home'));await page.screenshot({path:'tmp/app/home.png',fullPage:true});
+if(errors.length)throw Error(errors.join('\n'));console.log('UI PASS',JSON.stringify(result));await browser.close();})();
