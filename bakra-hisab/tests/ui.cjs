@@ -1,6 +1,6 @@
 const {chromium}=require('playwright');
 (async()=>{const browser=await chromium.launch({headless:true,args:['--no-sandbox']});const page=await browser.newPage({viewport:{width:393,height:852},deviceScaleFactor:1});const errors=[];page.on('pageerror',e=>errors.push(e.message));await page.goto('http://127.0.0.1:8765');
-const click=async(a,id)=>page.locator(`[data-act="${a}"]${id?`[data-id="${id}"]`:''}`).first().click();const fill=async(n,v)=>page.locator(`[name="${n}"]`).fill(v);const save=async()=>{await click('preview');await click('confirm')};
+const click=async(a,id)=>page.locator(`[data-act="${a}"]${id?`[data-id="${id}"]`:''}`).first().click();const fill=async(n,v)=>page.locator(`[name="${n}"]`).fill(v);const save=async()=>{await click('preview');if(!await page.locator('[data-act=confirm]').count())throw Error(await page.locator('#modal').innerText());await click('confirm')};
 await click('new-season');await fill('name','Eid 2027');await fill('opening','100000');await save();
 await click('form','goat');await fill('cost','20000');await fill('paidByMe','20000');await save();
 await click('form','expense');await fill('total','8000');await fill('share','4000');await fill('paidByMe','8000');await fill('title','Mulazim salary');await save();
@@ -12,7 +12,7 @@ await page.reload();await page.getByRole('heading',{name:'Bakra Hisab',exact:tru
 await page.screenshot({path:'tmp/app/home.png',fullPage:true});await click('nav','cash');await page.screenshot({path:'tmp/app/cash.png',fullPage:true});
 for(const r of ['expenses','goats','reports','customers','employees','backup','settings']){await page.evaluate(r=>nav(r),r);if(await page.locator('body').evaluate(e=>e.scrollWidth>innerWidth))throw Error('Overflow '+r)}
 const result=await page.evaluate(()=>({summary:E.summary(db,db.current),entries:E.ledger(db,db.current).length}));if(result.summary.profit!==600000||result.summary.partner!==0||result.summary.receivable!==0)throw Error(JSON.stringify(result));const saved=await page.evaluate(()=>backupEnvelope());
-await page.evaluate(()=>nav('home'));await click('new-season').catch(async()=>{await click('seasons');await click('new-season')});await fill('name','Eid 2028');await save();
+await page.evaluate(()=>nav('home'));await click('seasons');await click('new-season');await fill('name','Eid 2028');await save();
 if(await page.evaluate(()=>E.summary(db,db.current).sales)!==0)throw Error('Season isolation failed');
 await page.evaluate(s=>restorePreview(s),saved);await click('restore-confirm');
 if(await page.evaluate(()=>db.seasons.length)!==1)throw Error('Restore failed');
