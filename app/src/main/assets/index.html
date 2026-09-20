@@ -1,54 +1,48 @@
-<!doctype html><html lang="ur-Latn"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Highway Rush 3D</title><style>
-:root{--foreground:#f3f5ff;--background:#13162b;--card:#242a46;--card-foreground:#f3f5ff;color-scheme:dark;font-family:system-ui,sans-serif}
-*{box-sizing:border-box}body{margin:0;padding:14px;background:var(--background);color:var(--foreground)}
-.viz-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.tabular-nums{font-variant-numeric:tabular-nums}
-.card{background:var(--card);color:var(--card-foreground);padding:24px;border-radius:18px;box-shadow:0 12px 40px #0004}
-.btn{font:inherit;min-height:48px;padding:12px 16px;border:1px solid #60698f;border-radius:12px;background:#2d3658;color:#fff;cursor:pointer}
-.btn-primary{background:#79e7ff;color:#102634;border-color:#79e7ff;font-weight:600}.btn:disabled{opacity:.45}.btn:focus-visible{outline:3px solid #ffd342;outline-offset:3px}h2{margin:0 0 14px;font-size:24px}
-@media(orientation:landscape) and (max-height:550px){#color-racer{max-width:430px}.scene{max-width:350px;margin-inline:auto}}
-</style></head><body><div id="color-racer">
-  <div class="viz-row" style="justify-content:space-between"><strong>HIGHWAY RUSH · 3D</strong><span class="tabular-nums">Score <b data-score>0</b> · Best <b data-best>0</b></span></div>
-  <div class="scene">
-    <canvas width="720" height="600" aria-label="Colorful 3D racing game. Arrow keys ya left aur right buttons se traffic se bacho."></canvas>
-    <div class="overlay" data-overlay><div class="card" style="text-align:center"><h2 data-title>Color Rush 3D</h2><div data-result aria-live="polite">Tayyar ho?</div><button type="button" class="btn btn-primary" data-start>Race shuru karo</button></div></div>
-  </div>
-  <div class="viz-row" style="justify-content:space-between;margin-top:12px"><button type="button" class="btn" data-left>← Left</button><span class="tabular-nums" data-speed>0 km/h</span><button type="button" class="btn" data-right>Right →</button><button type="button" class="btn" data-pause disabled>Pause</button></div>
-</div>
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover"><meta name="theme-color" content="#101225"><title>Highway Rush 500</title>
 <style>
-#color-racer{max-width:640px;margin:auto;color:var(--foreground)}
-#color-racer .scene{position:relative;margin-top:12px;overflow:hidden}
-#color-racer canvas{display:block;width:100%;height:auto;touch-action:pan-y}
-#color-racer .overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:16px;background:rgba(25,16,65,.22)}
-#color-racer .overlay[hidden]{display:none}
-#color-racer [data-result]{margin-bottom:14px}
-#color-racer button{touch-action:manipulation}
-</style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#111329;color:white;font-family:system-ui,sans-serif;touch-action:none;user-select:none}canvas{position:fixed;inset:0;width:100%;height:100%}.hud{position:fixed;top:0;left:0;width:100%;padding:calc(env(safe-area-inset-top) + 18px) 20px 15px;background:linear-gradient(#101225eb,transparent);display:flex;justify-content:space-between;align-items:start;pointer-events:none}.brand{font-size:16px;font-weight:900;letter-spacing:1px}.tag{font-size:10px;letter-spacing:3px;color:#71e9ff;margin-top:5px}.numbers{text-align:right;font-size:12px;color:#d6d8e6}.numbers strong{font-size:23px;color:white}.controls{position:fixed;bottom:0;left:0;right:0;padding:12px 18px calc(env(safe-area-inset-bottom) + 18px);display:flex;align-items:center;justify-content:space-between;background:linear-gradient(transparent,#0a1020dc)}button{color:white;border:1px solid #ffffff40;background:#242d4cce;border-radius:22px;font:700 18px system-ui;touch-action:none;cursor:pointer}button:active{background:#71e9ff;color:#101225;transform:scale(.96)}.steer{width:26%;height:80px;font-size:30px;backdrop-filter:blur(8px)}.speed{text-align:center;font-size:38px;font-weight:900;line-height:1}.speed small{display:block;font-size:10px;letter-spacing:2px;color:#93eaff;margin-top:8px}.topActions{position:fixed;right:18px;top:calc(env(safe-area-inset-top) + 97px);display:flex;gap:8px}.topActions button{width:46px;height:42px;font-size:18px;border-radius:14px}.overlay{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#080b205b;backdrop-filter:blur(5px);padding:24px}.card{width:min(100%,370px);background:linear-gradient(150deg,#282e50f5,#11162af5);border:1px solid #ffffff25;border-radius:30px;padding:30px;text-align:center;box-shadow:0 25px 70px #0006}.eyebrow{color:#77e9ff;font-size:11px;letter-spacing:3px;font-weight:800}h1{font-size:42px;line-height:1.05;margin:15px 0}p{color:#c5ccdf;font-size:15px;line-height:1.7}.primary{background:#76e8ff;color:#11192f;border:0;padding:18px;width:100%;margin-top:10px}.hint{font-size:11px;opacity:.7;margin-top:15px}.hidden{display:none!important}#toast{position:fixed;top:31%;width:100%;text-align:center;color:#88f4ff;font-size:24px;font-weight:900;pointer-events:none;text-shadow:0 2px 12px #000} @media(max-height:480px){.card{padding:15px}h1{font-size:28px;margin:8px}p{margin:8px}.steer{height:56px}.hud{padding-top:8px}.topActions{top:75px}}
+</style></head><body>
+<canvas id="road" aria-label="Highway racing game"></canvas>
+<div class="hud"><div><div class="brand">HIGHWAY RUSH</div><div class="tag">500 • HARD MODE</div></div><div class="numbers">SCORE <strong id="score">0</strong><br>BEST <span id="best">0</span></div></div>
+<div class="topActions"><button id="fullscreen" aria-label="Full screen">⛶</button><button id="pause" aria-label="Pause">Ⅱ</button></div>
+<div id="toast"></div><div class="controls"><button class="steer" id="left" aria-label="Move left">←</button><div class="speed"><span id="speed">180</span><small>KM / H</small></div><button class="steer" id="right" aria-label="Move right">→</button></div>
+<div class="overlay" id="overlay"><div class="card"><div class="eyebrow">SUNSET RUN / HARD</div><h1 id="title">HIGHWAY<br>RUSH 500</h1><p id="message">Traffic se bacho. Speed 180 se<br><b>500 km/h</b> tak barhti jayegi.<br>Ek takkar — race khatam!</p><button class="primary" id="start">Race shuru karo →</button><div class="hint">← → buttons ya swipe se lane badlo</div></div></div>
 <script>
-(()=>{
-const root=document.getElementById('color-racer'),q=s=>root.querySelector(s),canvas=q('canvas'),ctx=canvas.getContext('2d'),overlay=q('[data-overlay]'),pause=q('[data-pause]');
-let mode='ready',lane=1,px=0,camx=0,distance=0,score=0,best=0,time=0,spawn=0,last=0,raf=0,cars=[];
-const colors=['#ff487b','#ffd342','#8a63ff','#20d8ee','#ff853a'];
-try{best=Number(localStorage.getItem('highway-rush-best'))||0}catch(e){}q('[data-best]').textContent=best;
-function project(x,y,z){const k=420/(z+10);return [300+(x-camx)*k,145+(5.5-y)*k]}
-function poly(points,color){ctx.fillStyle=color;ctx.beginPath();points.forEach((p,i)=>i?ctx.lineTo(p[0],p[1]):ctx.moveTo(p[0],p[1]));ctx.closePath();ctx.fill()}
-function face(points,color){poly(points.map(p=>project(...p)),color)}
-function box(x,y,z,w,h,d,color){const a=x-w/2,b=x+w/2,f=z+d;face([[a,y,f],[b,y,f],[b,y+h,f],[a,y+h,f]],color);face([[a,y,z],[a,y,f],[a,y+h,f],[a,y+h,z]],color);face([[a,y,z],[a,y,f],[a,y+h,f],[a,y+h,z]],'rgba(20,14,55,.25)');face([[b,y,z],[b,y,f],[b,y+h,f],[b,y+h,z]],color);face([[a,y+h,z],[b,y+h,z],[b,y+h,f],[a,y+h,f]],color);face([[a,y+h,z],[b,y+h,z],[b,y+h,f],[a,y+h,f]],'rgba(255,255,255,.2)');face([[a,y,z],[b,y,z],[b,y+h,z],[a,y+h,z]],color)}
-function car(x,z,color,player=false){face([[x-1.03,.01,z-.18],[x+1.03,.01,z-.18],[x+1.03,.01,z+3.4],[x-1.03,.01,z+3.4]],'rgba(21,21,50,.3)');for(const side of [-1,1])for(const dz of [.3,2.35])box(x+side*.84,.12,z+dz,.27,.58,.65,'#18243e');box(x,.35,z,1.8,.65,3.25,color);box(x,1,z+.8,1.45,.65,1.4,color);face([[x-.62,1.12,z+.79],[x+.62,1.12,z+.79],[x+.56,1.54,z+.79],[x-.56,1.54,z+.79]],'#183c66');box(x,.98,z-.05,1.93,.12,.3,color);for(const side of [-1,1])box(x+side*.62,.56,z-.02,.35,.19,.04,'#ff304f');box(x,.49,z-.03,.42,.14,.04,'#fff4bf');if(player){face([[x-.16,1.01,z],[x+.16,1.01,z],[x+.16,1.01,z+.77],[x-.16,1.01,z+.77]],'#fff6d7')}}
-function tree(x,z,n){box(x,0,z,.25,2,.25,'#8c4d55');const p=project(x,4.2,z),l=project(x-1.2,1.2,z),r=project(x+1.2,1.2,z),m=project(x,1.2,z-.5);poly([l,p,m],n%2?'#118b80':'#1aae72');poly([m,p,r],n%2?'#33d1ab':'#7ce465')}
-function draw(){ctx.setTransform(1.2,0,0,1.2,0,0);const sky=ctx.createLinearGradient(0,0,0,210);sky.addColorStop(0,'#7065ed');sky.addColorStop(.6,'#ff9cc2');sky.addColorStop(1,'#ffd392');ctx.fillStyle=sky;ctx.fillRect(0,0,600,500);ctx.fillStyle='#ffed9c';ctx.beginPath();ctx.arc(445,82,36,0,Math.PI*2);ctx.fill();poly([[0,155],[0,127],[70,59],[138,125],[216,74],[310,151]],'#9182ce');poly([[250,155],[355,76],[407,133],[502,66],[600,146],[600,177]],'#8e76c6');poly([[0,166],[76,112],[155,155],[262,119],[340,161],[490,116],[600,165],[600,220],[0,220]],'#68bda6');ctx.fillStyle='#63ce83';ctx.fillRect(0,172,600,328);
-for(let z=180;z>-4;z-=3){const near=z-3,odd=Math.floor((z+distance)/3)%2===0;face([[-50,0,near],[50,0,near],[50,0,z],[-50,0,z]],odd?'#63ce83':'#59c579');face([[-5.65,.015,near],[5.65,.015,near],[5.65,.015,z],[-5.65,.015,z]],odd?'#fff2cf':'#f85b80');face([[-5.25,.025,near],[5.25,.025,near],[5.25,.025,z],[-5.25,.025,z]],odd?'#394b70':'#3c4e73');if(odd)for(const x of [-1.75,1.75])face([[x-.045,.035,near],[x+.045,.035,near],[x+.045,.035,z],[x-.045,.035,z]],'#fff1c5')}
-const objects=[];for(let n=0;n<20;n++){const z=180-((distance+n*10)%190);if(z>-3){objects.push({z,draw:()=>tree(-7.5,z,n)});objects.push({z:z+2,draw:()=>tree(8.5,z+2,n+1)})}}for(const c of cars)objects.push({z:c.z,draw:()=>car(c.x,c.z,c.color)});objects.push({z:0,draw:()=>car(px,0,'#19d9ee',true)});objects.sort((a,b)=>b.z-a.z).forEach(o=>o.draw());}
-function show(title,label,result=''){q('[data-title]').textContent=title;q('[data-result]').textContent=result;q('[data-start]').textContent=label;overlay.hidden=false}
-function finish(){mode='over';pause.disabled=true;best=Math.max(best,Math.floor(score));q('[data-best]').textContent=best;try{localStorage.setItem('highway-rush-best',String(best))}catch(e){}show('Race khatam!','Dobara khelo','Tumhara score: '+Math.floor(score))}
-function tick(now){if(mode!=='playing')return;const dt=Math.min((now-last)/1000,.035);last=now;time+=dt;const speed=Math.min(54,26+time*.4);distance+=speed*dt;score+=speed*dt*.4;px+=((lane-1)*3.5-px)*Math.min(1,dt*10);camx=px*.22;spawn-=dt;if(spawn<=0){cars.push({x:(Math.floor(Math.random()*3)-1)*3.5,z:165,color:colors[Math.floor(Math.random()*colors.length)]});spawn=Math.max(1.05,1.9-time*.009)}let hit=false;for(const c of cars){c.z-=speed*dt;if(c.z<3.1&&c.z>-3.1&&Math.abs(c.x-px)<1.6)hit=true}cars=cars.filter(c=>c.z>-6);q('[data-score]').textContent=Math.floor(score);q('[data-speed]').textContent=Math.floor(speed*3.6)+' km/h';draw();if(hit){finish();return}raf=requestAnimationFrame(tick)}
-function start(){cancelAnimationFrame(raf);mode='playing';lane=1;px=0;camx=0;distance=0;score=0;time=0;spawn=.5;cars=[];overlay.hidden=true;pause.disabled=false;pause.textContent='Pause';q('[data-score]').textContent='0';last=performance.now();draw();raf=requestAnimationFrame(tick)}
-function toggle(){if(mode==='playing'){mode='paused';cancelAnimationFrame(raf);pause.textContent='Resume';show('Race paused','Resume')}else if(mode==='paused'){mode='playing';overlay.hidden=true;pause.textContent='Pause';last=performance.now();raf=requestAnimationFrame(tick)}}
-function move(d){if(mode==='playing')lane=Math.max(0,Math.min(2,lane+d))}
-q('[data-start]').addEventListener('click',()=>mode==='paused'?toggle():start());pause.addEventListener('click',toggle);q('[data-left]').addEventListener('click',()=>move(-1));q('[data-right]').addEventListener('click',()=>move(1));
-document.addEventListener('keydown',e=>{if(!['ArrowLeft','ArrowRight','a','d','p','P'].includes(e.key)||!['playing','paused'].includes(mode))return;e.preventDefault();if(e.key.toLowerCase()==='p'){if(!e.repeat)toggle()}else move(['ArrowLeft','a'].includes(e.key)?-1:1)});
-let touchX=null;canvas.addEventListener('pointerdown',e=>{touchX=e.clientX});canvas.addEventListener('pointerup',e=>{if(touchX!==null&&Math.abs(e.clientX-touchX)>20)move(e.clientX<touchX?-1:1);touchX=null});canvas.addEventListener('pointercancel',()=>touchX=null);
-window.addEventListener('race-pause',()=>{if(mode==='playing')toggle()});
-document.addEventListener('visibilitychange',()=>{if(document.hidden&&mode==='playing')toggle()});draw();
-})();
-</script>
-</body></html>
+'use strict';
+const $=id=>document.getElementById(id), canvas=$('road'),ctx=canvas.getContext('2d');
+let W=0,H=0,dpr=1,state='ready',lane=1,px=1,speed=180,score=0,best=0,elapsed=0,travel=0,traffic=[],spawn=0,last=0,toastTime=0,safeLane=1;
+try{best=+localStorage.getItem('highway-rush-best')||0}catch(e){} $('best').textContent=best;
+function resize(){W=innerWidth;H=innerHeight;dpr=Math.min(devicePixelRatio||1,2);canvas.width=W*dpr;canvas.height=H*dpr;ctx.setTransform(dpr,0,0,dpr,0,0)}addEventListener('resize',resize);resize();
+function poly(points,color){ctx.fillStyle=color;ctx.beginPath();points.forEach((p,i)=>i?ctx.lineTo(...p):ctx.moveTo(...p));ctx.closePath();ctx.fill()}
+function rr(x,y,w,h,r,color){ctx.fillStyle=color;ctx.beginPath();ctx.roundRect(x,y,w,h,r);ctx.fill()}
+function roadPoint(l,z){const p=z*z;return {x:W/2+(l-1)*(W*.86/3)*p,y:H*.32+H*.59*p,s: .055+.945*p}}
+function car(l,z,color,player=false){const q=roadPoint(l,z),w=W*.145*q.s,h=w*1.76,x=q.x-w/2,y=q.y-h;ctx.save();ctx.shadowBlur=player?22:0;ctx.shadowColor='#70ebff';rr(x-3*q.s,y+h*.24,w+6*q.s,h*.65,5*q.s,'#0b1020');rr(x,y,w,h,10*q.s,color);ctx.shadowBlur=0;rr(x+w*.12,y+h*.24,w*.76,h*.25,4*q.s,'#15253c');rr(x+w*.17,y+h*.57,w*.66,h*.14,3*q.s,'#16233c');rr(x+w*.15,y+h*.04,w*.7,h*.08,2*q.s,'#ffffff50');rr(x+w*.06,y+h*.88,w*.22,h*.055,2*q.s,'#ff667d');rr(x+w*.72,y+h*.88,w*.22,h*.055,2*q.s,'#ff667d');if(player){rr(x+w*.39,y+h*.02,w*.09,h*.19,0,'#fff9');rr(x+w*.53,y+h*.02,w*.09,h*.19,0,'#fff9')}ctx.restore()}
+function render(){const horizon=H*.32,g=ctx.createLinearGradient(0,0,0,horizon);g.addColorStop(0,'#403b92');g.addColorStop(.7,'#ba729c');g.addColorStop(1,'#f5b184');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);ctx.fillStyle='#fbd895';ctx.beginPath();ctx.arc(W*.78,H*.22,W*.09,0,Math.PI*2);ctx.fill();poly([[0,horizon],[0,H*.26],[W*.14,H*.17],[W*.33,H*.30],[W*.56,H*.2],[W*.72,H*.30],[W*.91,H*.18],[W,H*.25],[W,horizon]],'#6c6197');poly([[0,horizon],[W*.2,H*.26],[W*.39,H*.33],[W*.67,H*.27],[W,H*.33],[W,H]],'#417f78');ctx.fillStyle='#34766a';ctx.fillRect(0,horizon,W,H-horizon);
+for(let i=0;i<34;i++){let z=i/34,z2=(i+1)/34,a=roadPoint(1,z),b=roadPoint(1,z2),half=W*.47*z*z,half2=W*.47*z2*z2;ctx.fillStyle=(i+Math.floor(travel*13))%2?'#397f70':'#3d8775';ctx.fillRect(0,a.y,W,b.y-a.y+1);poly([[W/2-half,a.y],[W/2+half,a.y],[W/2+half2,b.y],[W/2-half2,b.y]],'#313e5e');let edge=(i+Math.floor(travel*18))%3===0?'#f26c8c':'#dfd4c5';for(let s of [-1,1])poly([[W/2+s*half,a.y],[W/2+s*(half+W*.017*z*z),a.y],[W/2+s*(half2+W*.017*z2*z2),b.y],[W/2+s*half2,b.y]],edge)}
+// Continue the asphalt beneath the control panel.
+poly([[W*.03,H*.91],[W*.97,H*.91],[W*1.15,H],[W*-.15,H]],'#313e5e');
+for(let i=0;i<16;i++){let z=((i/16+travel*.24)%1);for(let l of [.5,1.5]){let a=roadPoint(l,z),b=roadPoint(l,Math.min(1,z+.025));poly([[a.x-W*.003*a.s,a.y],[a.x+W*.003*a.s,a.y],[b.x+W*.004*b.s,b.y],[b.x-W*.004*b.s,b.y]],'#dedcca')}}
+for(let i=0;i<16;i++){let z=((i/16+travel*.13)%1),q=roadPoint(1,z);for(let side of [-1,1]){let x=W/2+side*(W*.06+W*.61*z*z),sz=W*.12*q.s;rr(x-sz*.045,q.y-sz*.15,sz*.09,sz*.4,0,'#60526a');poly([[x,q.y-sz*1.8],[x-sz*.45,q.y],[x+sz*.45,q.y]],i%2?'#277669':'#245b62')}}
+traffic.slice().sort((a,b)=>a.z-b.z).forEach(c=>car(c.lane,c.z,c.color));car(px,1,'#77e9ff',true);
+if(speed>350&&state==='running'){ctx.strokeStyle='#ffffff22';ctx.lineWidth=2;for(let i=0;i<10;i++){let y=(i*H/10+travel*130)%H;ctx.beginPath();ctx.moveTo(i%2?W-10:10,y);ctx.lineTo(i%2?W-15:15,y+H*.045);ctx.stroke()}}
+}
+function flash(t){$('toast').textContent=t;toastTime=1}
+function save(){best=Math.max(best,Math.floor(score));$('best').textContent=best;try{localStorage.setItem('highway-rush-best',best)}catch(e){}}
+function end(){state='over';save();$('title').textContent='Race khatam!';$('message').innerHTML='Tumhara score: <b>'+Math.floor(score)+'</b><br>Top speed: '+Math.floor(speed)+' km/h';$('start').textContent='Dobara khelo →';$('overlay').classList.remove('hidden');if(navigator.vibrate)navigator.vibrate(100)}
+function togglePause(){if(state==='running'){state='paused';$('title').textContent='Race paused';$('message').textContent='Tayyar ho? Race jari rakho.';$('start').textContent='Jari rakho →';$('overlay').classList.remove('hidden')}else if(state==='paused'){state='running';$('overlay').classList.add('hidden')}}
+function move(d){if(state==='running')lane=Math.max(0,Math.min(2,lane+d))}
+function start(){if(state==='paused'){togglePause();return}lane=px=1;speed=180;score=elapsed=travel=0;traffic=[];spawn=.9;safeLane=1;state='running';$('overlay').classList.add('hidden');$('toast').textContent='';toastTime=0;fullscreen()}
+function fullscreen(){try{if(!document.fullscreenElement&&document.documentElement.requestFullscreen)document.documentElement.requestFullscreen().catch(()=>{})}catch(e){}}
+function wave(){// At least one lane remains open in each traffic row.
+let next=Math.max(0,Math.min(2,safeLane+(Math.random()<.5?-1:1)));safeLane=next;
+let blocked=[0,1,2].filter(l=>l!==next);if(Math.random()>.48+elapsed*.006)blocked.splice(Math.floor(Math.random()*2),1);
+blocked.forEach(l=>traffic.push({lane:l,z:.08,passed:false,color:['#ff6687','#ffd17c','#c6adff','#e6edf4'][Math.floor(Math.random()*4)]}));
+spawn=Math.max(.84,1.55-elapsed*.011)}
+function update(dt){if(state!=='running')return;elapsed+=dt;speed=Math.min(500,180+elapsed*5.5);travel+=dt*speed/240;score+=dt*speed*.11;px+=(lane-px)*Math.min(1,dt*15);spawn-=dt;if(spawn<=0)wave();const velocity=.20+speed/1250;for(const c of traffic){let prev=c.z;c.z+=dt*velocity;if(c.z>.92&&prev<1.075&&Math.abs(c.lane-px)<.58){end();break}if(!c.passed&&c.z>1.07){c.passed=true;if(Math.abs(c.lane-px)<1.12){score+=100;flash('NEAR MISS +100')}}}traffic=traffic.filter(c=>c.z<1.22);if(toastTime>0){toastTime-=dt;if(toastTime<=0)$('toast').textContent=''}$('score').textContent=Math.floor(score);$('speed').textContent=Math.floor(speed)}
+function frame(t){let dt=Math.min((t-last)/1000||0,.035);last=t;update(dt);render();requestAnimationFrame(frame)}requestAnimationFrame(frame);
+$('start').onclick=start;$('pause').onclick=togglePause;$('fullscreen').onclick=fullscreen;
+for(const [id,d] of [['left',-1],['right',1]])$(id).addEventListener('pointerdown',e=>{e.preventDefault();move(d)});
+let touchX=null;canvas.addEventListener('pointerdown',e=>{touchX=e.clientX;canvas.setPointerCapture(e.pointerId)});canvas.addEventListener('pointerup',e=>{if(touchX!==null&&Math.abs(e.clientX-touchX)>25)move(e.clientX>touchX?1:-1);touchX=null});canvas.addEventListener('pointercancel',()=>touchX=null);
+addEventListener('keydown',e=>{if(['ArrowLeft','ArrowRight',' '].includes(e.key))e.preventDefault();if(e.repeat)return;if(e.key==='ArrowLeft'||e.key==='a')move(-1);if(e.key==='ArrowRight'||e.key==='d')move(1);if(e.key===' '||e.key==='Escape')togglePause()});document.addEventListener('visibilitychange',()=>{if(document.hidden&&state==='running')togglePause()});
+</script></body></html>
