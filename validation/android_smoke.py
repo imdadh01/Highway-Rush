@@ -64,7 +64,8 @@ im=Image.open('test-screen.png').convert('RGB');w,h=im.size
 pixels=list(im.crop((0,0,w,max(12,int(h*.035)))).getdata())
 assert sum(abs(r-9)<8 and abs(g-99)<8 and abs(b-71)<8 for r,g,b in pixels)>len(pixels)*.5, 'Status bar must use app green'
 assert sum(r>225 and g>225 and b>225 for r,g,b in pixels)>5, 'Status bar icons must be white'
-tap('Kharchay');time.sleep(4);tap('Feeding');time.sleep(4)
+# Tap the middle bottom navigation item; OCR also matches the Home metric label.
+adb('shell','input','tap',str(w//2),str(h-75));time.sleep(4);tap('Feeding');time.sleep(4)
 adb('shell','input','keyevent','4');time.sleep(4);assert_text('Medicine')
 adb('shell','input','keyevent','4');time.sleep(4);assert_text('Android-test')
 print('PASS: Android 1.1.0 install, native local save, force-stop/reopen, 1.1.1 update in place preserves season.',flush=True)
