@@ -25,7 +25,7 @@ public class MainActivity extends Activity {
  private final Runnable autoBackup=()->runBackup();
  private static final int EXPORT=10,LINK=11,RESTORE=12,PHOTO=13,CAMERA=14;
  @Override public void onCreate(Bundle state){super.onCreate(state);prefs=getSharedPreferences("backup",MODE_PRIVATE);dataFile=new AtomicFile(new File(getFilesDir(),"hisab-v1.json"));
-  web=new WebView(this);web.setBackgroundColor(Color.rgb(246,248,245));web.setOnApplyWindowInsetsListener((v,insets)->{v.setPadding(insets.getSystemWindowInsetLeft(),insets.getSystemWindowInsetTop(),insets.getSystemWindowInsetRight(),insets.getSystemWindowInsetBottom());return insets;});
+  web=new WebView(this);web.setBackgroundColor(Color.rgb(246,248,245));android.widget.FrameLayout container=new android.widget.FrameLayout(this);container.addView(web,new android.widget.FrameLayout.LayoutParams(-1,-1));container.setOnApplyWindowInsetsListener((v,insets)->{v.setPadding(insets.getSystemWindowInsetLeft(),insets.getSystemWindowInsetTop(),insets.getSystemWindowInsetRight(),insets.getSystemWindowInsetBottom());return insets;});
   WebSettings s=web.getSettings();s.setJavaScriptEnabled(true);s.setDomStorageEnabled(true);s.setAllowFileAccess(false);s.setAllowContentAccess(false);s.setAllowFileAccessFromFileURLs(false);s.setAllowUniversalAccessFromFileURLs(false);s.setMixedContentMode(WebSettings.MIXED_CONTENT_NEVER_ALLOW);
   web.setWebViewClient(new WebViewClient(){
    @Override public boolean shouldOverrideUrlLoading(WebView w,String u){return true;}
@@ -37,7 +37,7 @@ public class MainActivity extends Activity {
     return new WebResourceResponse("text/plain","UTF-8",404,"Not Found",java.util.Collections.emptyMap(),new ByteArrayInputStream(new byte[0]));
    }
   });
-  web.setWebChromeClient(new WebChromeClient());web.addJavascriptInterface(new Bridge(),"Native");setContentView(web);web.loadUrl("https://appassets.androidplatform.net/assets/index.html");
+  web.setWebChromeClient(new WebChromeClient());web.addJavascriptInterface(new Bridge(),"Native");setContentView(container);web.loadUrl("https://appassets.androidplatform.net/assets/index.html");
  }
  private void emit(String type,String payload){runOnUiThread(()->{if(web!=null)web.evaluateJavascript("window.nativeEvent&&window.nativeEvent("+JSONObject.quote(type)+","+JSONObject.quote(payload)+")",null);});}
  private byte[] readAll(InputStream in)throws Exception{try(InputStream x=in;ByteArrayOutputStream b=new ByteArrayOutputStream()){byte[] buf=new byte[8192];int n,total=0;while((n=x.read(buf))!=-1){total+=n;if(total>60*1024*1024)throw new IOException("Backup 60 MB se bara hai");b.write(buf,0,n);}return b.toByteArray();}}
