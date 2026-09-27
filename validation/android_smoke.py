@@ -48,6 +48,11 @@ def assert_text(text):
   time.sleep(2)
  raise AssertionError('Text missing: '+text+'; OCR: '+actual)
 adb('shell','settings','put','secure','show_ime_with_hard_keyboard','1')
+startup=' '.join(x['text'] for x in words())
+if 'pixellauncher' in norm(startup) and 'closeapp' in norm(startup):
+ tap('Close app')
+ adb('shell','am','start','-W','-n','com.bakrahisab.app/.MainActivity')
+ time.sleep(5)
 assert_text('Bakra Hisab');tap_green();tap('Season ka naam',35);adb('shell','input','text','Android-test');time.sleep(1);adb('shell','input','keyevent','4');time.sleep(1);tap_green();tap_green();assert_text('Android-test')
 adb('shell','am','force-stop','com.bakrahisab.app');adb('shell','am','start','-W','-n','com.bakrahisab.app/.MainActivity');time.sleep(4);assert_text('Android-test')
 adb('install','-r','Bakra-Hisab.apk');adb('shell','am','start','-W','-n','com.bakrahisab.app/.MainActivity');time.sleep(4);assert_text('Android-test')
