@@ -40,7 +40,9 @@ def tap_green():
     if right-left>70 and bottom-top>25:regions.append((left,top,right,bottom))
  if not regions:raise AssertionError('Green action button not found')
  left,top,right,bottom=max(regions,key=lambda r:r[3])
- adb('shell','input','tap',str((left+right)//2),str((top+bottom)//2));time.sleep(1)
+ print('BUTTON',left,top,right,bottom,adb('shell','wm','size'),flush=True)
+ adb('shell','input','tap',str((left+right)//2),str((top+bottom)//2));time.sleep(4)
+ print(adb('logcat','-d','-s','chromium'),flush=True)
 def assert_text(text):
  for _ in range(3):
   actual=' '.join(x['text'] for x in words())
@@ -53,7 +55,7 @@ if 'pixellauncher' in norm(startup) and 'closeapp' in norm(startup):
  tap('Close app')
  adb('shell','am','start','-W','-n','com.bakrahisab.app/.MainActivity')
  time.sleep(5)
-assert_text('Bakra Hisab');tap_green();tap('Season ka naam',35);adb('shell','input','text','Android-test');time.sleep(1);adb('shell','input','keyevent','4');time.sleep(1);tap_green();tap_green();assert_text('Android-test')
+assert_text('Bakra Hisab');tap_green();tap_green();tap('Season ka naam',35);adb('shell','input','text','Android-test');time.sleep(1);adb('shell','input','keyevent','4');time.sleep(1);tap_green();tap_green();assert_text('Android-test')
 adb('shell','am','force-stop','com.bakrahisab.app');adb('shell','am','start','-W','-n','com.bakrahisab.app/.MainActivity');time.sleep(4);assert_text('Android-test')
 adb('install','-r','Bakra-Hisab.apk');adb('shell','am','start','-W','-n','com.bakrahisab.app/.MainActivity');time.sleep(4);assert_text('Android-test')
 print('PASS: Android install, native local save, force-stop/reopen, update in place preserves season.',flush=True)
