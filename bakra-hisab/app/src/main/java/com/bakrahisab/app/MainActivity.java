@@ -25,7 +25,10 @@ public class MainActivity extends Activity {
  private final Runnable autoBackup=()->runBackup();
  private static final int EXPORT=10,LINK=11,RESTORE=12,PHOTO=13,CAMERA=14;
  @Override public void onCreate(Bundle state){super.onCreate(state);prefs=getSharedPreferences("backup",MODE_PRIVATE);dataFile=new AtomicFile(new File(getFilesDir(),"hisab-v1.json"));
-  web=new WebView(this);web.setBackgroundColor(Color.rgb(246,248,245));android.widget.FrameLayout container=new android.widget.FrameLayout(this);container.addView(web,new android.widget.FrameLayout.LayoutParams(-1,-1));container.setOnApplyWindowInsetsListener((v,insets)->{v.setPadding(insets.getSystemWindowInsetLeft(),insets.getSystemWindowInsetTop(),insets.getSystemWindowInsetRight(),insets.getSystemWindowInsetBottom());return insets;});
+  getWindow().setStatusBarColor(Color.rgb(9,99,71));
+  getWindow().getDecorView().setSystemUiVisibility(getWindow().getDecorView().getSystemUiVisibility() & ~android.view.View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+  if(Build.VERSION.SDK_INT>=30)getWindow().getInsetsController().setSystemBarsAppearance(0,android.view.WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS);
+  web=new WebView(this);web.setBackgroundColor(Color.rgb(246,248,245));android.widget.FrameLayout container=new android.widget.FrameLayout(this);container.setBackgroundColor(Color.rgb(9,99,71));container.addView(web,new android.widget.FrameLayout.LayoutParams(-1,-1));container.setOnApplyWindowInsetsListener((v,insets)->{v.setPadding(insets.getSystemWindowInsetLeft(),insets.getSystemWindowInsetTop(),insets.getSystemWindowInsetRight(),insets.getSystemWindowInsetBottom());return insets;});
   WebSettings s=web.getSettings();s.setJavaScriptEnabled(true);s.setDomStorageEnabled(true);s.setAllowFileAccess(false);s.setAllowContentAccess(false);s.setAllowFileAccessFromFileURLs(false);s.setAllowUniversalAccessFromFileURLs(false);s.setMixedContentMode(WebSettings.MIXED_CONTENT_NEVER_ALLOW);
   web.setWebViewClient(new WebViewClient(){
    @Override public boolean shouldOverrideUrlLoading(WebView w,String u){return true;}

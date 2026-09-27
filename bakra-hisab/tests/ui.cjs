@@ -2,7 +2,11 @@ const {chromium}=require('playwright'),A=require('node:assert/strict');
 (async()=>{const browser=await chromium.launch({headless:true,args:['--no-sandbox']});const page=await browser.newPage({viewport:{width:393,height:852},deviceScaleFactor:1}),errors=[];page.on('pageerror',e=>errors.push(e.message));await page.goto('http://127.0.0.1:8765');
 const click=async(a,id)=>page.locator(`[data-act="${a}"]${id?`[data-id="${id}"]`:''}`).first().click();const fill=async(n,v)=>page.locator(`[name="${n}"]`).fill(v);const save=async()=>{await click('preview');if(!await page.locator('[data-act=confirm]').count())throw Error(await page.locator('#modal').innerText());await click('confirm');if(await page.locator('[data-act=confirm]').count())throw Error('Save failed: '+await page.locator('#toast').innerText())};
 await click('new-season');await fill('name','Eid 2027');await fill('opening','100000');await fill('partnerName','Partner');await save();
-await click('form','goat');await fill('cost','20000');await page.screenshot({path:'tmp/app/photo-form.png',fullPage:true});await save();
+await page.evaluate(()=>{nav('expenses');nav('category','Feeding');nav('settings');nav('backup');goBack()});A.equal(await page.evaluate(()=>route),'settings');await click('back');A.equal(await page.evaluate(()=>route),'category');await click('back');A.equal(await page.evaluate(()=>route),'expenses');await page.evaluate(()=>goBack());A.equal(await page.evaluate(()=>route),'home');
+await click('form','goat');await fill('cost','20000');
+for(const width of [320,393]){await page.setViewportSize({width,height:852});const tops=await page.locator('[name=paidByMe],[name=partnerPaid]').evaluateAll(es=>es.map(e=>e.getBoundingClientRect().top));A.ok(Math.abs(tops[0]-tops[1])<1,'paired inputs aligned');}
+await click('preview');await page.evaluate(()=>goBack());A.equal(await page.locator('[name=cost]').inputValue(),'20000');
+await page.screenshot({path:'tmp/app/photo-form.png',fullPage:true});await save();
 await click('form','expense');await fill('total','500');await fill('share','500');A.equal(await page.locator('[name=partnerPaid]').getAttribute('required'),null);await fill('partnerPaid','');await save();
 await page.evaluate(()=>nav('employees'));await click('form','employee');await fill('name','Worker');await fill('amount','8000');await fill('percent','50');await save();await click('employee');
 await click('employee-pay');await fill('amount','2000');await save();A.equal(await page.evaluate(()=>E.employeeSummary(db,detailId).balance),-200000);
