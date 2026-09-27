@@ -20,6 +20,27 @@ def tap(label,dy=0):
     left=min(int(x['left']) for x in group);right=max(int(x['left'])+int(x['width']) for x in group);top=min(int(x['top']) for x in group);bottom=max(int(x['top'])+int(x['height']) for x in group)
     adb('shell','input','tap',str((left+right)//2),str((top+bottom)//2+dy));time.sleep(1);return
  raise AssertionError('Control missing: '+label+'; OCR: '+' '.join(x['text'] for x in rows))
+def tap_green():
+ screen()
+ im=Image.open('test-screen.png').convert('RGB');w,h=im.size;seen=set();regions=[]
+ for y in range(h):
+  for x in range(w):
+   if (x,y) in seen:continue
+   r,g,b=im.getpixel((x,y))
+   if not(r<40 and g>60 and g>r*1.8 and 25<b<145):continue
+   todo=[(x,y)];seen.add((x,y));pts=[]
+   while todo:
+    a,c=todo.pop();pts.append((a,c))
+    for p,q in ((a+1,c),(a-1,c),(a,c+1),(a,c-1)):
+     if p<0 or q<0 or p>=w or q>=h or (p,q) in seen:continue
+     r,g,b=im.getpixel((p,q))
+     if r<40 and g>60 and g>r*1.8 and 25<b<145:seen.add((p,q));todo.append((p,q))
+   if len(pts)>700:
+    left=min(p[0] for p in pts);right=max(p[0] for p in pts);top=min(p[1] for p in pts);bottom=max(p[1] for p in pts)
+    if right-left>70 and bottom-top>25:regions.append((left,top,right,bottom))
+ if not regions:raise AssertionError('Green action button not found')
+ left,top,right,bottom=max(regions,key=lambda r:r[3])
+ adb('shell','input','tap',str((left+right)//2),str((top+bottom)//2));time.sleep(1)
 def assert_text(text):
  for _ in range(3):
   actual=' '.join(x['text'] for x in words())
@@ -27,7 +48,7 @@ def assert_text(text):
   time.sleep(2)
  raise AssertionError('Text missing: '+text+'; OCR: '+actual)
 adb('shell','settings','put','secure','show_ime_with_hard_keyboard','1')
-assert_text('Bakra Hisab');tap('Naya season');tap('Season ka naam',35);adb('shell','input','text','Android-test');time.sleep(1);adb('shell','input','keyevent','4');time.sleep(1);tap('Preview');tap('Confirm');assert_text('Android-test')
+assert_text('Bakra Hisab');tap_green();tap('Season ka naam',35);adb('shell','input','text','Android-test');time.sleep(1);adb('shell','input','keyevent','4');time.sleep(1);tap_green();tap_green();assert_text('Android-test')
 adb('shell','am','force-stop','com.bakrahisab.app');adb('shell','am','start','-W','-n','com.bakrahisab.app/.MainActivity');time.sleep(4);assert_text('Android-test')
 adb('install','-r','Bakra-Hisab.apk');adb('shell','am','start','-W','-n','com.bakrahisab.app/.MainActivity');time.sleep(4);assert_text('Android-test')
 print('PASS: Android install, native local save, force-stop/reopen, update in place preserves season.',flush=True)
