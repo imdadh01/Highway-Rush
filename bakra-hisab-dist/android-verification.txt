@@ -1,1 +1,1 @@
-PASS: Android 35 install, native season save, force-stop/reopen and install -r preserve data.
+PASS: Android 35 old 1.0.0 native save and force-stop/reopen; update to 1.1.0 with install -r retains season data.
