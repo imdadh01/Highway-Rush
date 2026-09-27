@@ -58,7 +58,16 @@ if 'pixellauncher' in norm(startup) and 'closeapp' in norm(startup):
 assert_text('Bakra Hisab');tap_green();tap_green();tap('Season ka naam',35);adb('shell','input','text','Android-test');time.sleep(1);adb('shell','input','keyevent','4');time.sleep(1);tap_green();tap_green();assert_text('Android-test')
 adb('shell','am','force-stop','com.bakrahisab.app');adb('shell','am','start','-W','-n','com.bakrahisab.app/.MainActivity');time.sleep(4);assert_text('Android-test')
 adb('install','-r','Bakra-Hisab.apk');adb('shell','am','start','-W','-n','com.bakrahisab.app/.MainActivity');time.sleep(4);assert_text('Android-test')
-print('PASS: Android 1.0.0 install, native local save, force-stop/reopen, 1.1.0 update in place preserves season.',flush=True)
+# Verify native status-bar background/icons and device Back routing in the update.
+screen()
+im=Image.open('test-screen.png').convert('RGB');w,h=im.size
+pixels=list(im.crop((0,0,w,max(12,int(h*.035)))).getdata())
+assert sum(abs(r-9)<8 and abs(g-99)<8 and abs(b-71)<8 for r,g,b in pixels)>len(pixels)*.5, 'Status bar must use app green'
+assert sum(r>225 and g>225 and b>225 for r,g,b in pixels)>5, 'Status bar icons must be white'
+tap('Kharchay');time.sleep(4);tap('Feeding');time.sleep(4)
+adb('shell','input','keyevent','4');time.sleep(4);assert_text('Medicine')
+adb('shell','input','keyevent','4');time.sleep(4);assert_text('Android-test')
+print('PASS: Android 1.1.0 install, native local save, force-stop/reopen, 1.1.1 update in place preserves season.',flush=True)
 adb('shell','screencap','-p','/sdcard/screen.png');subprocess.check_call(['adb','pull','/sdcard/screen.png','android-screen.png'])
-pathlib.Path('bakra-hisab-dist/android-verification.txt').write_text('PASS: Android 35 old 1.0.0 native save and force-stop/reopen; update to 1.1.0 with install -r retains season data.\n')
+pathlib.Path('bakra-hisab-dist/android-verification.txt').write_text('PASS: Android 35 old 1.1.0 native save and force-stop/reopen; update to 1.1.1 with install -r retains season data; green status bar, white icons and one-step native Back verified.\n')
 
