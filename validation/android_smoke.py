@@ -58,6 +58,7 @@ if 'pixellauncher' in norm(startup) and 'closeapp' in norm(startup):
 assert_text('Bakra Hisab');tap_green();tap_green();tap('Season ka naam',35);adb('shell','input','text','Android-test');time.sleep(1);adb('shell','input','keyevent','4');time.sleep(1);tap_green();tap_green();assert_text('Android-test')
 adb('shell','am','force-stop','com.bakrahisab.app');adb('shell','am','start','-W','-n','com.bakrahisab.app/.MainActivity');time.sleep(4);assert_text('Android-test')
 adb('install','-r','Bakra-Hisab.apk');adb('shell','am','start','-W','-n','com.bakrahisab.app/.MainActivity');time.sleep(4);assert_text('Android-test')
-print('PASS: Android install, native local save, force-stop/reopen, update in place preserves season.',flush=True)
+print('PASS: Android 1.0.0 install, native local save, force-stop/reopen, 1.1.0 update in place preserves season.',flush=True)
 adb('shell','screencap','-p','/sdcard/screen.png');subprocess.check_call(['adb','pull','/sdcard/screen.png','android-screen.png'])
-pathlib.Path('bakra-hisab-dist/android-verification.txt').write_text('PASS: Android 35 install, native season save, force-stop/reopen and install -r preserve data.\n')
+pathlib.Path('bakra-hisab-dist/android-verification.txt').write_text('PASS: Android 35 old 1.0.0 native save and force-stop/reopen; update to 1.1.0 with install -r retains season data.\n')
+

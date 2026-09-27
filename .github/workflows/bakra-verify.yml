@@ -41,7 +41,7 @@ jobs:
           target: google_apis
           disable-animations: true
           script: |
-            adb install Bakra-Hisab.apk
+            adb install bakra-hisab-dist/Bakra-Hisab-1.0.0.apk
             adb shell am start -W -n com.bakrahisab.app/.MainActivity
             sleep 8
             adb shell screencap -p /sdcard/start.png
@@ -51,7 +51,7 @@ jobs:
             base64 -w 0 android-screen.png > bakra-hisab-dist/android-screen.png.base64
       - uses: actions/upload-artifact@v4
         with:
-          name: Bakra-Hisab-1.0.0
+          name: Bakra-Hisab-1.1.0
           path: Bakra-Hisab.apk
       - name: Save Android verification screenshot
         if: always()
@@ -62,3 +62,4 @@ jobs:
           git add bakra-hisab-dist
           git commit -m 'Save Android installation verification [skip ci]' || exit 0
           git push origin HEAD:bakra-hisab-app
+
