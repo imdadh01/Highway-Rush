@@ -1,0 +1,13 @@
+const A=require('node:assert/strict'),E=require('../app/src/main/assets/engine.js');
+const d=E.newDB();d.current='s';d.seasons=[{id:'s',name:'Medical test',opening:0,start:'2026-01-01',partnerName:'Partner'}];
+for(let n=1;n<=2;n++)E.upsert(d,'goats',{id:'g'+n,season:'s',tag:'B'+n,date:'2026-01-01',cost:10000,paidByMe:10000});
+E.saveHealth(d,{id:'blank',season:'s',goats:[],kind:'Deworming',date:'',medicine:'',dose:'',weight:'',nextDate:''});E.validate(d);A.equal(d.schedules.length,0);
+E.saveHealth(d,{id:'h',season:'s',goats:['g1','g2'],kind:'Deworming',date:'2026-09-28',medicine:'Recorded medicine',dose:'As entered',nextDate:'2026-10-05',time:'09:30',followDate:'2026-10-06',expenseMode:'new',billTotal:'800',billShare:'400',billMe:'800'});E.validate(d);A.equal(d.schedules.length,2);A.equal(d.expenses.length,1);A.equal(E.summary(d,'s').expense,40000);A.equal(E.summary(d,'s').partner,40000);
+const expense=d.health.find(h=>h.id==='h').expense;E.saveHealth(d,{id:'linked',season:'s',goats:['g1'],kind:'Treatment',date:'',expenseMode:'link',expense});A.equal(d.expenses.length,1);A.equal(E.summary(d,'s').expense,40000);
+d.settings.healthNotifications={enabled:true,time:'09:00',leadDays:1};A.equal(E.healthEvents(d).length,4);const first=d.schedules.find(s=>s.slot==='next');E.completeHealthSchedule(d,first.id,'g1');A.match(E.healthEvents(d)[0].body,/B2/);A.ok(!E.healthEvents(d)[0].body.includes('B1'));E.completeHealthSchedule(d,first.id,'g2');A.equal(E.healthEvents(d).length,2);A.equal(E.healthDue(d,'s','','done').length,1);A.equal(E.healthDue(d,'s','','late','2026-10-07').length,1);
+E.removeHealth(d,'health','h');A.equal(d.schedules.length,0);A.equal(d.expenses.length,1);E.validate(d);E.remove(d,'expense',expense);A.equal(d.health.find(h=>h.id==='linked').expense,'');E.validate(d);
+E.saveHealth(d,{id:'weight',season:'s',goats:['g1'],kind:'Weight',date:'',weight:'21.5'});E.upsert(d,'schedules',{id:'empty',season:'s',date:'',goats:[],doneGoats:[],done:false});E.validate(d);A.equal(E.healthEvents(d).length,0);A.equal(E.addDays('2026-09-28',7),'2026-10-05');
+const old=JSON.parse(JSON.stringify(d));old.version=2;delete old.health;delete old.schedules;const updated=E.migrate(old);A.equal(updated.version,3);A.deepEqual(E.summary(updated,'s'),E.summary(old,'s'));E.validate(updated);
+E.remove(d,'goat','g1');E.validate(d);A.ok(!d.health.some(h=>h.id==='weight'));
+d.settings.healthNotifications.enabled=false;A.equal(E.healthEvents(d).length,0);A.deepEqual(E.migrate(JSON.parse(JSON.stringify(d))),d);
+console.log('PASS: optional medical fields, grouped goats, schedules, per-goat completion, owner-share/link without duplicate bill, deletion links, schema migration and notification event queue.');

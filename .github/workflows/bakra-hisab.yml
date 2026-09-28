@@ -22,10 +22,32 @@ jobs:
       - uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: '8.9'
+      - name: Check new medical features
+        run: node bakra-hisab/tests/health.test.cjs
+      - name: Check medical screens
+        run: |
+          npm install --no-save --package-lock=false playwright@1.58.2
+          npx playwright install --with-deps chromium
+          mkdir -p tmp/app
+          python3 -m http.server 8765 --directory bakra-hisab/app/src/main/assets > /tmp/hisab-server.log 2>&1 &
+          node bakra-hisab/tests/health-ui.cjs
       - name: Build APK
         run: |
           sdkmanager 'platforms;android-35' 'build-tools;34.0.0'
-          gradle -p bakra-hisab assembleRelease --no-daemon
+          gradle -p bakra-hisab assembleRelease assembleDebug --no-daemon
+      - name: Enable KVM for new notification check
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - name: Check new offline health notification
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          arch: x86_64
+          target: google_apis
+          disable-animations: true
+          script: python3 bakra-hisab/tests/health-native.py
       - uses: actions/upload-artifact@v4
         with:
           name: Bakra-Hisab-unsigned
