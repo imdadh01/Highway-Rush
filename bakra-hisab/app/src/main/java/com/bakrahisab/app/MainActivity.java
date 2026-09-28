@@ -35,7 +35,7 @@ public class MainActivity extends Activity {
    @Override public boolean shouldOverrideUrlLoading(WebView w,String u){return true;}
    @Override public WebResourceResponse shouldInterceptRequest(WebView w,WebResourceRequest request){
     Uri u=request.getUrl();String path=u.getPath();
-    if("https".equals(u.getScheme())&&"appassets.androidplatform.net".equals(u.getHost())&&path!=null&&path.matches("/assets/(index\\.html|style\\.css|engine\\.js|health\\.js|app\\.js)")){
+    if("https".equals(u.getScheme())&&"appassets.androidplatform.net".equals(u.getHost())&&path!=null&&path.matches("/assets/(index\\.html|style\\.css|engine\\.js|health\\.js|lists\\.js|app\\.js)")){
      try{String mime=path.endsWith(".html")?"text/html":path.endsWith(".css")?"text/css":"application/javascript";return new WebResourceResponse(mime,"UTF-8",getAssets().open(path.substring(8)));}catch(IOException ignored){}
     }
     return new WebResourceResponse("text/plain","UTF-8",404,"Not Found",java.util.Collections.emptyMap(),new ByteArrayInputStream(new byte[0]));
