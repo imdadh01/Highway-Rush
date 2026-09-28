@@ -19,3 +19,4 @@
 .app-wrap[data-route="cash"]>.topbar,.app-wrap[data-route="expenses"]>.topbar,.app-wrap[data-route="goats"]>.topbar,.app-wrap[data-route="reports"]>.topbar{position:sticky;top:0;z-index:18;background:var(--surface);padding:18px 0;margin-top:-18px;box-shadow:0 -12px 0 12px var(--surface)}
 .search-wrap{position:relative}.search-wrap .search{padding-right:54px}.search-submit{position:absolute;right:8px;top:8px;width:36px;height:36px;border:0;border-radius:10px;background:var(--pale);color:var(--green);display:grid;place-items:center}
 @media print{.app-wrap>.topbar,.cash-actions{position:static!important}}
+[hidden]{display:none!important}
