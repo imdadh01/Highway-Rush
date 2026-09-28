@@ -1,0 +1,11 @@
+const A=require('node:assert/strict'),E=require('../app/src/main/assets/engine.js');
+const d=E.newDB();d.current='s';d.seasons=[{id:'s',start:'2026-01-01',name:'Test',opening:0}];
+for(let n=1;n<=3;n++)E.upsert(d,'goats',{id:'g'+n,season:'s',date:'2026-01-01',tag:'B'+n,cost:n*100000,paidByMe:n*100000});
+E.upsert(d,'expenses',{id:'e',season:'s',date:'2026-01-01',category:'Feeding',total:40000,share:20000,paidByMe:40000});
+E.upsert(d,'sales',{id:'sale',season:'s',date:'2026-01-02',goat:'g1',goats:['g1','g2'],price:500000,received:100000});E.validate(d);
+A.equal(E.summary(d,'s').profit,180000);A.equal(E.summary(d,'s').sold,2);A.equal(E.summary(d,'s').stock,1);A.equal(E.summary(d,'s').stockValue,300000);A.equal(E.ledger(d,'s').filter(r=>r.type==='sale').length,1);A.equal(E.outstanding(d,d.sales[0]),400000);A.equal(E.saleOf(d,'g2').id,'sale');
+E.upsert(d,'receipts',{id:'r',sale:'sale',season:'s',date:'2026-01-03',amount:400000});E.validate(d);A.equal(E.summary(d,'s').profit,180000);A.equal(E.summary(d,'s').receivable,0);
+const duplicate=JSON.parse(JSON.stringify(d));duplicate.sales.push({...d.sales[0],id:'bad'});A.throws(()=>E.validate(duplicate));
+d.sales[0].price=450000;A.throws(()=>E.validate(d));d.sales[0].price=500000;
+E.remove(d,'goat','g1');E.validate(d);A.equal(d.sales.length+d.receipts.length,0);A.equal(E.goatStatus(d,d.goats.find(g=>g.id==='g2')),'Mojood');
+console.log('PASS: bulk sold count/cost/profit, stock, one cash entry, common receivable, no receipt double profit, overpayment/duplicate guards, linked delete.');
