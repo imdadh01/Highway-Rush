@@ -13,3 +13,9 @@
 .profit-card{padding:20px;margin-bottom:16px;color:var(--green);background:#fff}.profit-card .eyebrow{font-size:13px;font-weight:600}.profit-card small{color:var(--green)}.sale-pick .thumb{width:46px;height:46px;border-radius:11px}.sale-pick .thumb svg{width:30px;height:30px}.sale-pick-text{min-width:0;flex:1}
 
 .health-reminder{width:100%;display:flex;align-items:center;gap:10px;border:1px solid var(--line);border-radius:13px;padding:11px 13px;margin:12px 0;background:white;color:var(--green);text-align:left;box-shadow:var(--shadow)}.health-reminder>span{flex:1}.health-reminder b{font-size:12px}.health-reminder small{display:block;font-size:11px}.health-reminder svg{width:20px;height:20px}.health-link{display:flex;justify-content:center;align-items:center;gap:8px;padding:10px}.health-list{margin-top:16px}details{margin:14px 0}summary{cursor:pointer;color:var(--green);font-weight:600;padding:10px 0}.health-list p{line-height:1.6}.sale-picks>small{display:block;padding:12px}
+
+/* Stable headers and compact stock actions. */
+.app-wrap[data-route="home"]>.season{position:sticky;top:8px;z-index:18;box-shadow:0 0 0 9px var(--surface),var(--shadow)}
+.app-wrap[data-route="cash"]>.topbar,.app-wrap[data-route="expenses"]>.topbar,.app-wrap[data-route="goats"]>.topbar,.app-wrap[data-route="reports"]>.topbar{position:sticky;top:0;z-index:18;background:var(--surface);padding:18px 0;margin-top:-18px;box-shadow:0 -12px 0 12px var(--surface)}
+.search-wrap{position:relative}.search-wrap .search{padding-right:54px}.search-submit{position:absolute;right:8px;top:8px;width:36px;height:36px;border:0;border-radius:10px;background:var(--pale);color:var(--green);display:grid;place-items:center}
+@media print{.app-wrap>.topbar,.cash-actions{position:static!important}}

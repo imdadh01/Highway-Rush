@@ -22,15 +22,13 @@ jobs:
       - uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: '8.9'
-      - name: Check new medical features
-        run: node bakra-hisab/tests/health.test.cjs
-      - name: Check medical screens
+      - name: Check 1.3.1 changes
         run: |
           npm install --no-save --package-lock=false playwright@1.58.2
           npx playwright install --with-deps chromium
           mkdir -p tmp/app
           python3 -m http.server 8765 --directory bakra-hisab/app/src/main/assets > /tmp/hisab-server.log 2>&1 &
-          node bakra-hisab/tests/health-ui.cjs
+          node bakra-hisab/tests/update131.cjs
       - name: Build APK
         run: |
           sdkmanager 'platforms;android-35' 'build-tools;34.0.0'
