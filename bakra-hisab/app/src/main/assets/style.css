@@ -9,3 +9,5 @@
 .form-grid{align-items:stretch}.form-grid>.field{display:flex;flex-direction:column;min-width:0}.form-grid>.field>span{flex:1}.form-grid>.field>input,.form-grid>.field>select{flex-shrink:0}.employee-add .btn{width:100%}.employee-list-heading{margin:18px 0 4px}.compact-select{font-size:12px;padding:10px 8px;min-height:40px}.employee-list-heading h2{font-size:15px}
 
 .sale-picks{max-height:230px;overflow:auto;background:white;border:1px solid var(--line);border-radius:12px}.sale-pick{display:flex;align-items:center;gap:12px;padding:12px;border-bottom:1px solid var(--line)}.sale-pick input{width:22px;height:22px;accent-color:var(--green);flex-shrink:0}.sale-pick small{display:block}.sale-pick b{overflow-wrap:anywhere}
+
+.profit-card{padding:20px;margin-bottom:16px;color:var(--green);background:#fff}.profit-card .eyebrow{font-size:13px;font-weight:600}.profit-card small{color:var(--green)}.sale-pick .thumb{width:46px;height:46px;border-radius:11px}.sale-pick .thumb svg{width:30px;height:30px}.sale-pick-text{min-width:0;flex:1}

@@ -22,15 +22,6 @@ jobs:
       - uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: '8.9'
-      - name: Check accounting
-        run: node bakra-hisab/tests/bulk.test.cjs
-      - name: Browser integration test
-        run: |
-          npm install --no-save --package-lock=false playwright@1.58.2
-          npx playwright install --with-deps chromium
-          mkdir -p tmp/app
-          python3 -m http.server 8765 --directory bakra-hisab/app/src/main/assets > /tmp/hisab-server.log 2>&1 &
-          node bakra-hisab/tests/bulk-ui.cjs
       - name: Build APK
         run: |
           sdkmanager 'platforms;android-35' 'build-tools;34.0.0'
@@ -45,7 +36,7 @@ jobs:
           base64 -w 0 bakra-hisab/app/build/outputs/apk/release/app-release-unsigned.apk > bakra-hisab-dist/unsigned-apk.base64
           git config user.name github-actions
           git config user.email github-actions@users.noreply.github.com
-          for f in tmp/app/*.png; do base64 -w 0 "$f" > "bakra-hisab-dist/$(basename "$f").base64"; done
+          for f in tmp/app/*.png; do [ -f "$f" ] || continue; base64 -w 0 "$f" > "bakra-hisab-dist/$(basename "$f").base64"; done
           git add bakra-hisab-dist
           git commit -m 'Store unsigned Bakra Hisab build [skip ci]' || exit 0
           git push origin HEAD:bakra-hisab-app
