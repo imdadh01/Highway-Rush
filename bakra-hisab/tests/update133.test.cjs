@@ -1,0 +1,8 @@
+const A=require('node:assert/strict'),E=require('../app/src/main/assets/engine.js');
+const d=E.newDB();d.current='s';d.seasons=[{id:'s',name:'Test',start:'2026-01-01',opening:0}];d.goats=['a','b','c'].map(id=>({id,season:'s',date:'2026-01-01',tag:id,cost:2700000,paidByMe:2700000}));
+const e={id:'food',season:'s',date:'2026-01-02',category:'Feeding',total:10001,share:5001,paidByMe:10001};E.allocateExpense(d,e,['a','b','c']);d.expenses.push(e);E.validate(d);A.equal(e.allocations.reduce((n,a)=>n+a.total,0),10001);A.equal(e.allocations.reduce((n,a)=>n+a.share,0),5001);A.equal(E.goatExpense(e,'a'),1667);
+const s={id:'sale',season:'s',date:'2026-02-01',goats:['a','b'],price:6000000,received:6000000};const fees={rent:{share:1000},mandi:{share:0}};A.equal(E.saleCosts(d,s,fees).expense,4334);A.equal(E.saleCosts(d,s,fees).profit,595666);
+d.expenses.push({id:'med',season:'s',date:'2026-01-02',category:'Medicine',total:8000,share:8000,paidByMe:8000,goat:''});E.validate(d);A.equal(E.saleCosts(d,s,fees).expense,4334);
+d.expenses.push({id:'direct',season:'s',date:'2026-01-02',category:'Medicine',total:5000,share:5000,paidByMe:5000,goat:'a'});A.equal(E.saleCosts(d,s,fees).expense,9334);d.expenses.push({id:'oldfee',season:'s',date:'2026-01-02',category:'Kiraya',total:9999,share:9999,paidByMe:9999,tradeType:'sale',tradeId:'sale'});A.equal(E.saleCosts(d,s,fees).expense,9334);
+A.equal(E.summary(d,'s').stockValue,8100000);const before=E.goatExpense(e,'b');E.remove(d,'goat','a');E.validate(d);A.equal(E.goatExpense(e,'b'),before);A.equal(E.migrate(JSON.parse(JSON.stringify(d))).expenses[0].allocations.length,2);
+console.log('PASS feeding rounding, owner share, sale fee edit, medicine without goat, allocation deletion and backup');
