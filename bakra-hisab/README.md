@@ -1,6 +1,14 @@
-# Bakra Hisab 1.1.0
+# Bakra Hisab 1.3.3
 
-Personal, offline Android ledger for seasonal goat trading. Application ID remains `com.bakrahisab.app`; versionCode 2 is an in-place upgrade of 1.0.0 when signed with the original private certificate. The signing key must never enter this repository.
+- Mojood stock box shows count and purchase value using the existing card theme.
+- Feeding can target any selected available goats, or remain a general season expense. Total bill and owner's share are split independently in integer paisa; the remainder is assigned in selection order. Expense edits replace allocations without creating duplicate cash entries.
+- Medicine may be saved without a goat. Unallocated expenses remain in season totals, not individual sale profit.
+- Sale preview retains sale minus purchase and adds linked owner-share expenses through the sale date, current sale fees, total cost and net profit/loss. General expenses and unallocated salaries are excluded from individual sale profit. Season accounting remains unchanged.
+- Reports > Mulazim Ka Hisab selects one or multiple employees for separate ledger sections in one PDF.
+- Existing backups remain readable (schema 3). Deleting a goat removes its allocation links without redistributing costs to remaining goats; the original bill stays in season accounting.
+- Android versionCode 9. Release builds are unsigned until signed using the original private certificate; that key must not be committed. Do not uninstall the existing app to apply an update.
+
+## Earlier accounting rules
 
 ## Accounting rules
 
@@ -26,3 +34,4 @@ Employee long-press or Select enables bulk deletion; confirmation removes linked
 ## Validation
 
 `node bakra-hisab/tests/accounting.test.cjs` checks migration, owner share, payments/returns, partner balance, recurrence, sorting, cascades and restore. `node bakra-hisab/tests/ui.cjs` runs browser integration flows against the assets served on port 8765. GitHub Actions builds the unsigned release. The signed APK is checked with Android apksigner and installed over 1.0.0 in an Android 35 emulator to verify data retention.
+
