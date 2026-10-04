@@ -1,12 +1,12 @@
-# Bakra Hisab 1.3.3
+# Bakra Hisab 1.3.4
 
-- Mojood stock box shows count and purchase value using the existing card theme.
-- Feeding can target any selected available goats, or remain a general season expense. Total bill and owner's share are split independently in integer paisa; the remainder is assigned in selection order. Expense edits replace allocations without creating duplicate cash entries.
-- Medicine may be saved without a goat. Unallocated expenses remain in season totals, not individual sale profit.
-- Sale preview retains sale minus purchase and adds linked owner-share expenses through the sale date, current sale fees, total cost and net profit/loss. General expenses and unallocated salaries are excluded from individual sale profit. Season accounting remains unchanged.
-- Reports > Mulazim Ka Hisab selects one or multiple employees for separate ledger sections in one PDF.
-- Existing backups remain readable (schema 3). Deleting a goat removes its allocation links without redistributing costs to remaining goats; the original bill stays in season accounting.
-- Android versionCode 9. Release builds are unsigned until signed using the original private certificate; that key must not be committed. Do not uninstall the existing app to apply an update.
+- Feeding selection displays goat photo or the existing goat icon.
+- Stock uses compact spacing and a header search with live photo results; sorting opens beside its button.
+- Direct-cost cards open category totals and dated expense details.
+- Employee salary responsibility uses either percentages or fixed amounts adding to monthly salary. Payments have Main, Partner or Dono with actual payer amounts; no payment percentage input.
+- Employee and PDF summaries show each payer's net payments, earned salary responsibility, advance/payable and contribution difference. Partner Hisab includes salary contribution differences.
+- On the first upgrade, legacy payment responsibilities are corrected using each employee's configured salary split. Original payment amounts/payers and earned salary entries are preserved. Previous payment share is retained internally, with a native pre-update snapshot. Future salary setting changes do not rewrite saved payment responsibility snapshots.
+- Android versionCode 10, same package and signing identity. Tests deliberately not run for this release at the user's request; only release compilation and signing.
 
 ## Earlier accounting rules
 
