@@ -510,7 +510,7 @@ const englishText={
  "Sale se linked baqi bakray dobara stock mein aayenge.": "Other goats linked to the sale will return to stock.",
  "Yeh salary credit hai. Di hui payment mulazim ki book mein alag edit karein.": "This is accrued salary. Edit actual payments separately in the employee account.",
  "band karein": "close",
- "Bakra Hisab 1.3.5 · Personal-use build. Photos aur financial records aapke phone mein. Reset/uninstall se pehle backup phone ke bahar rakhein.": "Bakra Hisab 1.3.5 · Personal-use build. Photos and financial records are stored on your phone. Keep a backup outside the phone before resetting or uninstalling."
+ "Bakra Hisab 1.3.6 · Personal-use build. Photos aur financial records aapke phone mein. Reset/uninstall se pehle backup phone ke bahar rakhein.": "Bakra Hisab 1.3.6 · Personal-use build. Photos and financial records are stored on your phone. Keep a backup outside the phone before resetting or uninstalling."
 };
 
 // Translate presentation only; persisted records, option values and action IDs stay intact.
