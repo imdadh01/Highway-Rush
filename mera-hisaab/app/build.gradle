@@ -1,0 +1,31 @@
+plugins { id 'com.android.application' }
+def signing = new Properties()
+def signingFile = rootProject.file('signing.properties')
+if (signingFile.exists()) signingFile.withInputStream { signing.load(it) }
+android {
+    namespace 'com.imdadh.merahisaab'
+    compileSdk 35
+    defaultConfig {
+        applicationId 'com.imdadh.merahisaab'
+        minSdk 26
+        targetSdk 35
+        versionCode (System.getenv('APP_VERSION_CODE') ?: '1').toInteger()
+        versionName (System.getenv('APP_VERSION_NAME') ?: '1.0.0')
+    }
+    signingConfigs {
+        release {
+            if (signingFile.exists()) {
+                storeFile rootProject.file(signing['storeFile'])
+                storePassword signing['storePassword']
+                keyAlias signing['keyAlias']
+                keyPassword signing['keyPassword']
+            }
+        }
+    }
+    buildTypes { release { signingConfig signingConfigs.release; minifyEnabled false } }
+    compileOptions { sourceCompatibility JavaVersion.VERSION_17; targetCompatibility JavaVersion.VERSION_17 }
+}
+tasks.register('requireReleaseKey') {
+    doLast { if (!signingFile.exists()) throw new GradleException('Release signing.properties is required; never generate a replacement key for an update.') }
+}
+tasks.configureEach { if (name == 'preReleaseBuild') dependsOn 'requireReleaseKey' }
