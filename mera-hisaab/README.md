@@ -1,6 +1,6 @@
 # Mera Hisaab — Android
 
-Offline Android expense and business cash manager. The interface follows the chosen white-card theme with blue–purple header, smooth line graph and centered purple + menu. Language is in Settings. App package: `com.imdadh.merahisaab`.
+Offline Android expense and business cash manager. The interface follows the original purple–pink gradient theme with compact balance card alignment, smooth line graph and centered purple + menu. Language is in Settings. App package: `com.imdadh.merahisaab`.
 
 ## Included
 
@@ -53,7 +53,7 @@ The signing key and password are intentionally excluded from source and must nev
 
 This app lives in the `mera-hisaab/` folder of the existing `imdadh01/Highway-Rush` repository. Open this folder as the Android project; the root project is the separate Highway Rush game.
 
-[Download Mera Hisaab 1.1.0 APK](downloads/Mera-Hisaab-1.1.0.apk?raw=true)
+[Download Mera Hisaab 1.1.1 APK](downloads/Mera-Hisaab-1.1.1.apk?raw=true)
 
 The nested `.github/workflows/android-release.yml` is a future build template, not an active workflow. Before activating it at the repository root, remove its push trigger, set run working-directory to `mera-hisaab`, prefix artifact paths with `mera-hisaab/`, use unique release tags, and rename its signing secrets to `MERA_HISAAB_KEYSTORE_BASE64` and `MERA_HISAAB_KEYSTORE_PASSWORD`. Configure those secrets from the ORIGINAL private backup. Never use the game's signing key. No signing secrets have been configured by this upload.
 
