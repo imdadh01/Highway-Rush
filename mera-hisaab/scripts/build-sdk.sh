@@ -4,8 +4,8 @@ set -euo pipefail
 project_dir=$(cd "$(dirname "$0")/.." && pwd)
 sdk_dir=${ANDROID_SDK_ROOT:?Set ANDROID_SDK_ROOT}
 key_dir=${1:?Pass the private signing directory}
-version_code=${APP_VERSION_CODE:-1}
-version_name=${APP_VERSION_NAME:-1.0.0}
+version_code=${APP_VERSION_CODE:-2}
+version_name=${APP_VERSION_NAME:-1.1.0}
 bt="$sdk_dir/build-tools/35.0.0"
 platform="$sdk_dir/platforms/android-35/android.jar"
 build_dir="$project_dir/app/build/direct"

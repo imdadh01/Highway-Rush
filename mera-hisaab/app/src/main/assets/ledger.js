@@ -11,7 +11,8 @@ function slice(pool,n){let a=zero(),left=n; for(const s of sources){a[s]=Math.mi
 function replay(p){
  let b={sources:zero(),wallets:Object.create(null),investments:Object.create(null),sales:Object.create(null),debts:Object.create(null),events:[],bookedProfit:0};
  for(const w of p.wallets)b.wallets[w.id]=0;
- function cash(w,n){if(!(w in b.wallets))fail('Account missing / Account nahi mila');integer(n);b.wallets[w]+=n;if(b.wallets[w]<0)fail('Account balance is too low on this date / Is tareekh par account mein paisay kam hain');}
+ function cash(w,n){if(!(w in b.wallets))fail('Account missing / Account nahi mila');integer(n);b.wallets[w]+=n;integer(b.wallets[w]);}
+ function expense(t){let a=zero(),left=t.amount;let priority=t.autoFunding?[]:[t.source,t.second];for(const s of [...new Set([...priority,'side','opening','borrowed','business'])].filter(s=>sources.includes(s))){a[s]=Math.min(Math.max(0,b.sources[s]),left);left-=a[s];}a.side+=left;for(const s of sources)b.sources[s]-=a[s];cash(t.wallet,-t.amount);}
  function funding(t,n){let a=take(b.sources,n,t.source,t.second);for(const s of sources)b.sources[s]-=a[s];cash(t.wallet,-n);return a;}
  function incoming(w,a){for(const s of sources)b.sources[s]+=a[s]||0;cash(w,sum(a));}
  function receiveSale(s,n,w,e){if(n>s.total-s.paid)fail('Payment exceeds amount due / Baqi raqam se zyada payment');let principal=Math.min(n,Math.max(0,s.cost-s.paid));let used=slice(s.remaining,principal);for(const k of sources)s.remaining[k]-=used[k];used.business+=n-principal;incoming(w,used);s.paid+=n;e.income+=n-principal;e.businessIncome+=n-principal;}
@@ -25,7 +26,7 @@ function replay(p){
    case 'opening': if(!sources.includes(t.source))fail('Invalid opening source');b.sources[t.source]+=t.amount;cash(t.wallet,t.amount);break;
    case 'openingInvestment': b.investments[t.id]={id:t.id,note:t.note,date:t.date,cost:t.amount,remaining:t.amount,alloc:{...zero(),opening:t.amount}};break;
    case 'income': if(!['side','business'].includes(t.source))fail('Invalid income source');b.sources[t.source]+=t.amount;cash(t.wallet,t.amount);e.income=t.amount;e.businessIncome=t.source==='business'?t.amount:0;break;
-   case 'expense':funding(t,t.amount);e.expense=t.amount;break;
+   case 'expense':expense(t);e.expense=t.amount;break;
    case 'invest': b.investments[t.id]={id:t.id,note:t.note,date:t.date,cost:t.amount,remaining:t.amount,alloc:funding(t,t.amount)};break;
    case 'sale':{
     let lot=b.investments[t.link];if(!lot)fail('Original investment must come first / Pehle investment ki entry honi chahiye');integer(t.cost);integer(t.paid);
