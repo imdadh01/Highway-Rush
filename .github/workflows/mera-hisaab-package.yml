@@ -26,6 +26,6 @@ jobs:
         run: bash mera-hisaab/scripts/build-sdk.sh
       - uses: actions/upload-artifact@v4
         with:
-          name: Mera-Hisaab-1.2.2-unsigned
+          name: Mera-Hisaab-1.3.0-unsigned
           path: mera-hisaab/app/build/direct/aligned.apk
           retention-days: 7

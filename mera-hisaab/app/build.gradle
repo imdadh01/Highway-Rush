@@ -9,8 +9,8 @@ android {
         applicationId 'com.imdadh.merahisaab'
         minSdk 26
         targetSdk 35
-        versionCode (System.getenv('APP_VERSION_CODE') ?: '6').toInteger()
-        versionName (System.getenv('APP_VERSION_NAME') ?: '1.2.2')
+        versionCode (System.getenv('APP_VERSION_CODE') ?: '7').toInteger()
+        versionName (System.getenv('APP_VERSION_NAME') ?: '1.3.0')
     }
     signingConfigs {
         release {

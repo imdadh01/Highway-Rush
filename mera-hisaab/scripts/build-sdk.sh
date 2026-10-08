@@ -8,8 +8,8 @@ if [ "${BUILD_UNSIGNED:-false}" != true ] && [ -z "$key_dir" ]; then
   printf '%s\n' 'Pass the original private signing directory.' >&2
   exit 1
 fi
-version_code=${APP_VERSION_CODE:-6}
-version_name=${APP_VERSION_NAME:-1.2.2}
+version_code=${APP_VERSION_CODE:-7}
+version_name=${APP_VERSION_NAME:-1.3.0}
 bt="$sdk_dir/build-tools/35.0.0"
 platform="$sdk_dir/platforms/android-35/android.jar"
 build_dir="$project_dir/app/build/direct"
