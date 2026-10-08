@@ -6,14 +6,14 @@ const clone=o=>JSON.parse(JSON.stringify(o));
 const zero=()=>Object.fromEntries(sources.map(x=>[x,0]));
 function fail(s){throw new Error(s);}
 function integer(n){if(!Number.isSafeInteger(n)||Math.abs(n)>9e12)fail('Invalid amount / Raqam durust nahi');}
-function take(pool,n,first,second){integer(n);let a=zero(),left=n;for(const s of [first,second].filter((x,i,v)=>x&&v.indexOf(x)===i)){if(!sources.includes(s))fail('Choose funding source / Paisay ka source chunein');a[s]=Math.min(Math.max(0,pool[s]),left);left-=a[s];}if(left)fail('Not enough in this source. Choose a second source / Is source mein paisay kam hain; doosra source chunein');return a;}
+function take(pool,n,first,second){integer(n);let a=zero(),left=n;first=sources.includes(first)?first:'business';for(const s of [...new Set([first,second,'side','opening','borrowed','business'])].filter(s=>sources.includes(s))){a[s]=Math.min(Math.max(0,pool[s]),left);left-=a[s];}a[first]+=left;return a;}
 function slice(pool,n){let a=zero(),left=n; for(const s of sources){a[s]=Math.min(pool[s]||0,left);left-=a[s];}if(left)fail('Principal allocation error');return a;}
 function replay(p){
  let b={sources:zero(),wallets:Object.create(null),investments:Object.create(null),sales:Object.create(null),debts:Object.create(null),events:[],bookedProfit:0};
  for(const w of p.wallets)b.wallets[w.id]=0;
  function cash(w,n){if(!(w in b.wallets))fail('Account missing / Account nahi mila');integer(n);b.wallets[w]+=n;integer(b.wallets[w]);}
  function expense(t){let a=zero(),left=t.amount;let priority=t.autoFunding?[]:[t.source,t.second];for(const s of [...new Set([...priority,'side','opening','borrowed','business'])].filter(s=>sources.includes(s))){a[s]=Math.min(Math.max(0,b.sources[s]),left);left-=a[s];}a.side+=left;for(const s of sources)b.sources[s]-=a[s];cash(t.wallet,-t.amount);}
- function funding(t,n){let a=take(b.sources,n,t.source,t.second);for(const s of sources)b.sources[s]-=a[s];cash(t.wallet,-n);return a;}
+ function funding(t,n){let preferred=sources.includes(t.source)?t.source:t.type==='invest'?'business':t.type==='debtPayment'?'borrowed':'side';let a=take(b.sources,n,preferred,t.second);for(const s of sources)b.sources[s]-=a[s];cash(t.wallet,-n);return a;}
  function incoming(w,a){for(const s of sources)b.sources[s]+=a[s]||0;cash(w,sum(a));}
  function receiveSale(s,n,w,e){if(n>s.total-s.paid)fail('Payment exceeds amount due / Baqi raqam se zyada payment');let principal=Math.min(n,Math.max(0,s.cost-s.paid));let used=slice(s.remaining,principal);for(const k of sources)s.remaining[k]-=used[k];used.business+=n-principal;incoming(w,used);s.paid+=n;e.income+=n-principal;e.businessIncome+=n-principal;}
  const ts=p.transactions.slice().sort((a,c)=>a.date.localeCompare(c.date)||a.order-c.order);
