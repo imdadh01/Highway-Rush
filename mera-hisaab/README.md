@@ -53,7 +53,7 @@ The signing key and password are intentionally excluded from source and must nev
 
 This app lives in the `mera-hisaab/` folder of the existing `imdadh01/Highway-Rush` repository. Open this folder as the Android project; the root project is the separate Highway Rush game.
 
-[Download Mera Hisaab 1.2.0 APK](downloads/Mera-Hisaab-1.2.0.apk?raw=true)
+[Download Mera Hisaab 1.2.1 APK](downloads/Mera-Hisaab-1.2.1.apk?raw=true)
 
 The nested `.github/workflows/android-release.yml` is a future build template, not an active workflow. Before activating it at the repository root, remove its push trigger, set run working-directory to `mera-hisaab`, prefix artifact paths with `mera-hisaab/`, use unique release tags, and rename its signing secrets to `MERA_HISAAB_KEYSTORE_BASE64` and `MERA_HISAAB_KEYSTORE_PASSWORD`. Configure those secrets from the ORIGINAL private backup. Never use the game's signing key. No signing secrets have been configured by this upload.
 
@@ -66,3 +66,7 @@ Settings → Save backup → choose Google Drive or local storage in Android's f
 ## Version 1.2.0
 
 Compact invested-total card and account-info popup; Side Income labels; weekday and hourly graph axes; saved transaction times (legacy unknown times excluded from hourly chart but kept in totals); clickable income/expense totals; live all-field search; themed selection menus and anchored account menu; raised settings cards, animated page gradients, capital info popup, orange expense action, and adaptive launcher icon. No tests were run.
+
+## Version 1.2.1
+
+Account editor (name and existing opening entries), confirmed account deletion, and confirmed reset of the selected account ledger from Settings. Reset preserves account name and bank settings; other profiles are unchanged. Deleting the last profile returns to onboarding. Stronger lavender income-card fill, border and shadow. No tests run.
