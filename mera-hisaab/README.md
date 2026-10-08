@@ -7,7 +7,7 @@ Offline Android expense and business cash manager. The interface follows the ori
 - Independent profiles, opening cash and pre-existing business investments.
 - Daily income/expenses with optional notes, dates, search, sort, edit and guarded deletion.
 - Available cash excludes invested capital and unpaid receivables.
-- Side-work / business-profit / opening / borrowed source balances separate from payment accounts.
+- Side Income / business-profit / opening / borrowed source balances separate from payment accounts.
 - Personal payments default to side income, investment defaults to business profit. A second source can explicitly cover a shortage.
 - Optional Cash/Bank/Digital Bank tracking. Enabling allocates existing money; disabling consolidates without duplicating income. Transfers are excluded from income and expense totals.
 - Investment lots, partial sales, full loss, partial receipts, recorded sale profit/loss, linked receipt entries.
@@ -18,7 +18,7 @@ Offline Android expense and business cash manager. The interface follows the ori
 
 ## Financial conventions
 
-Amounts use integer paisa. Cash-source and wallet totals must reconcile. Expenses automatically use available money, prioritizing side work, opening balance, borrowed money, then business profit. Any uncovered amount is tracked as a negative side-work balance; cash/bank balances may be negative. Expense entry does not require funding-source selection. Other business funding retains explicit source selection. Transactions replay chronologically; edits and backdated entries recalculate subsequent balances.
+Amounts use integer paisa. Cash-source and wallet totals must reconcile. Expenses automatically use available money, prioritizing side work, opening balance, borrowed money, then business profit. Any uncovered amount is tracked as a negative side-income balance; cash/bank balances may be negative. Expense entry does not require funding-source selection. Other business funding retains explicit source selection. Transactions replay chronologically; edits and backdated entries recalculate subsequent balances.
 
 Opening balances, transfers, borrowing and principal repayment are not income. Sale profit/loss is recorded at sale time, separately from cash income. Sale receipts first recover original cost (returned to its original funding sources); any receipt above cost becomes received business profit. On a loss, only the recoverable principal returns. Unpaid sale value remains receivable and is never included in available cash.
 
@@ -53,7 +53,7 @@ The signing key and password are intentionally excluded from source and must nev
 
 This app lives in the `mera-hisaab/` folder of the existing `imdadh01/Highway-Rush` repository. Open this folder as the Android project; the root project is the separate Highway Rush game.
 
-[Download Mera Hisaab 1.1.1 APK](downloads/Mera-Hisaab-1.1.1.apk?raw=true)
+[Download Mera Hisaab 1.2.0 APK](downloads/Mera-Hisaab-1.2.0.apk?raw=true)
 
 The nested `.github/workflows/android-release.yml` is a future build template, not an active workflow. Before activating it at the repository root, remove its push trigger, set run working-directory to `mera-hisaab`, prefix artifact paths with `mera-hisaab/`, use unique release tags, and rename its signing secrets to `MERA_HISAAB_KEYSTORE_BASE64` and `MERA_HISAAB_KEYSTORE_PASSWORD`. Configure those secrets from the ORIGINAL private backup. Never use the game's signing key. No signing secrets have been configured by this upload.
 
@@ -61,4 +61,8 @@ The APK was built locally. No automated tests were run. Keep the private signing
 
 ## Backup
 
-Settings → Save backup → choose Google Drive or local storage in Android's file picker. Restore replaces all profiles only after confirmation. Backup files are plaintext financial data; save privately. App lock uses the phone's existing device credential. No automatic scheduled backup is claimed.
+Settings → Save backup → choose Google Drive or local storage in Android's file picker. Restore replaces all profiles only after confirmation. Backup files are plaintext financial data; save privately. App lock uses the phone's existing device credential. Automatic backup is optional: select a writable document once through Android SAF, preferably in Google Drive for cloud backup. Persisted document access lets a JobScheduler service write silently after edits and approximately every six hours. Android may defer jobs; provider cloud syncing requires its own connection and account. Settings shows last successful document write or failure without automatic popups. Manual exports report success. A local snapshot is also retained before each automatic write. Move/delete/revoke access to the chosen document requires choosing a new location. Only the original release key signs update APKs.
+
+## Version 1.2.0
+
+Compact invested-total card and account-info popup; Side Income labels; weekday and hourly graph axes; saved transaction times (legacy unknown times excluded from hourly chart but kept in totals); clickable income/expense totals; live all-field search; themed selection menus and anchored account menu; raised settings cards, animated page gradients, capital info popup, orange expense action, and adaptive launcher icon. No tests were run.

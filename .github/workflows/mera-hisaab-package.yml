@@ -1,0 +1,31 @@
+name: Package Mera Hisaab without tests
+on:
+  workflow_dispatch:
+  push:
+    branches: [mera-hisaab-build-1.2.0]
+permissions:
+  contents: read
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: android-actions/setup-android@v3
+        with:
+          packages: platform-tools
+          log-accepted-android-sdk-licenses: false
+      - name: Install build tools
+        run: sdkmanager 'platforms;android-35' 'build-tools;35.0.0'
+      - name: Package only (no tests)
+        env:
+          BUILD_UNSIGNED: 'true'
+        run: bash mera-hisaab/scripts/build-sdk.sh
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Mera-Hisaab-1.2.0-unsigned
+          path: mera-hisaab/app/build/direct/aligned.apk
+          retention-days: 7
