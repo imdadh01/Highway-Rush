@@ -510,7 +510,20 @@ const englishText={
  "Sale se linked baqi bakray dobara stock mein aayenge.": "Other goats linked to the sale will return to stock.",
  "Yeh salary credit hai. Di hui payment mulazim ki book mein alag edit karein.": "This is accrued salary. Edit actual payments separately in the employee account.",
  "band karein": "close",
- "Bakra Hisab 1.3.7 · Personal-use build. Photos aur financial records aapke phone mein. Reset/uninstall se pehle backup phone ke bahar rakhein.": "Bakra Hisab 1.3.7 · Personal-use build. Photos and financial records are stored on your phone. Keep a backup outside the phone before resetting or uninstalling."
+ "Bakra Hisab 1.3.8 · Personal-use build. Photos aur financial records aapke phone mein. Reset/uninstall se pehle backup phone ke bahar rakhein.": "Bakra Hisab 1.3.8 · Personal-use build. Photos and financial records are stored on your phone. Keep a backup outside the phone before resetting or uninstalling.",
+ "Photo badlein": "Change photo",
+ "Transport, Kiraya aur Mandi fees": "Transport, rent and market fees",
+ "Transport / Kiraya / Mandi fee ka hissa aur payment bill se zyada nahi ho sakte.": "Transport, rent and market fee shares and payments cannot exceed the bill.",
+ "Record mojood": "Recorded",
+ "Record nahi / baqi": "Not recorded / remaining",
+ "Is bakray ka hisab": "This goat",
+ "Mojood bakron ka hisab": "Goats currently in stock",
+ "Har bakra aik baar count hota hai. Record hona mukammal course ki tasdeeq nahi.": "Each goat is counted once. A record does not confirm a complete course.",
+ "Pending dose walay bakray baqi mein count hotay hain.": "Goats with a pending dose are counted as remaining.",
+ "Agli dose:": "Next dose:",
+ "din baqi": "days remaining",
+ "din late": "days overdue",
+ "Schedule nahi": "Not scheduled"
 };
 
 // Translate presentation only; persisted records, option values and action IDs stay intact.
@@ -549,3 +562,4 @@ document.addEventListener('DOMContentLoaded',()=>{
  function observe(){observer.observe(document.body,{subtree:true,childList:true,characterData:true,attributes:true,attributeFilter:['placeholder','aria-label','title','alt']});}
  localize();observe();
 });
+
