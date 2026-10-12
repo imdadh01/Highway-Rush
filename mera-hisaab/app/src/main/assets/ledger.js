@@ -9,13 +9,15 @@ function integer(n){if(!Number.isSafeInteger(n)||Math.abs(n)>9e12)fail('Invalid 
 function take(pool,n,first,second,deficit=first){integer(n);let a=zero(),left=n;first=sources.includes(first)?first:'business';for(const s of [...new Set([first,second,'capital','side','opening','borrowed','business'])].filter(s=>sources.includes(s))){a[s]=Math.min(Math.max(0,pool[s]),left);left-=a[s];}a[sources.includes(deficit)?deficit:first]+=left;return a;}
 function slice(pool,n){let a=zero(),left=n; for(const s of sources){a[s]=Math.min(pool[s]||0,left);left-=a[s];}if(left)fail('Principal allocation error');return a;}
 function replay(p){
- let b={sources:zero(),wallets:Object.create(null),investments:Object.create(null),sales:Object.create(null),debts:Object.create(null),events:[],bookedProfit:0};
+ let b={businessFunds:{capital:0,profit:0},sources:zero(),wallets:Object.create(null),investments:Object.create(null),sales:Object.create(null),debts:Object.create(null),events:[],bookedProfit:0};
  for(const w of p.wallets)b.wallets[w.id]=0;
  function cash(w,n){if(!(w in b.wallets))fail('Account missing / Account nahi mila');integer(n);b.wallets[w]+=n;integer(b.wallets[w]);}
- function expense(t){let a=zero(),left=t.amount;let priority=t.autoFunding?[]:[t.source,t.second];for(const s of [...new Set([...priority,'side','opening','borrowed','business','capital'])].filter(s=>sources.includes(s))){a[s]=Math.min(Math.max(0,b.sources[s]),left);left-=a[s];}a.side+=left;for(const s of sources)b.sources[s]-=a[s];cash(t.wallet,-t.amount);}
- function funding(t,n){let preferred=sources.includes(t.source)?t.source:t.type==='invest'?'business':t.type==='debtPayment'?'borrowed':'side';let a=take(b.sources,n,preferred,t.second,t.type==='invest'?'capital':preferred);for(const s of sources)b.sources[s]-=a[s];cash(t.wallet,-n);return a;}
+ function businessSpend(n){let profit=Math.min(Math.max(0,b.businessFunds.profit),n);b.businessFunds.profit-=profit;b.businessFunds.capital-=n-profit;return {...zero(),business:profit,capital:n-profit};}
+ function personalFunding(t,n){let first=['side','opening','borrowed'].includes(t.source)?t.source:'side';let a=take(b.sources,n,first,['side','opening','borrowed'].includes(t.second)?t.second:null,first);for(const k of sources)b.sources[k]-=a[k];cash(t.wallet,-n);return a;}
+ function expense(t){if(t.paymentBalance==='business')businessSpend(t.amount);else personalFunding(t,t.amount);}
+ function funding(t,n){if(t.type==='invest'&&(t.paymentBalance==='business'||(!t.paymentBalance&&['business','capital'].includes(t.source))))return businessSpend(n);return personalFunding(t,n);}
  function incoming(w,a){for(const s of sources)b.sources[s]+=a[s]||0;cash(w,sum(a));}
- function receiveSale(s,n,w,e){if(n>s.total-s.paid)fail('Payment exceeds amount due / Baqi raqam se zyada payment');let principal=Math.min(n,Math.max(0,s.cost-s.paid));let used=slice(s.remaining,principal);for(const k of sources)s.remaining[k]-=used[k];incoming(w,{...zero(),capital:principal,business:n-principal});e.returnedCapital=principal;s.paid+=n;e.income+=n-principal;e.businessIncome+=n-principal;}
+ function receiveSale(s,n,w,e){if(n>s.total-s.paid)fail('Payment exceeds amount due / Baqi raqam se zyada payment');let principal=Math.min(n,Math.max(0,s.cost-s.paid));let used=slice(s.remaining,principal);for(const k of sources)s.remaining[k]-=used[k];b.businessFunds.capital+=principal;b.businessFunds.profit+=n-principal;e.returnedCapital=principal;s.paid+=n;e.businessIncome+=n-principal;e.businessReceipts=n;}
  const ts=p.transactions.slice().sort((a,c)=>a.date.localeCompare(c.date)||a.order-c.order);
  const ids=new Set();
  for(const t of ts){
@@ -23,9 +25,9 @@ function replay(p){
   integer(t.amount);if(t.amount<0)fail('Negative amount');
   let e={...t,income:0,expense:0,businessIncome:0,booked:0};
   switch(t.type){
-   case 'opening': if(!sources.includes(t.source))fail('Invalid opening source');b.sources[t.source]+=t.amount;cash(t.wallet,t.amount);break;
+   case 'opening': if(!sources.includes(t.source))fail('Invalid opening source');if(['business','capital'].includes(t.source))b.businessFunds[t.source==='business'?'profit':'capital']+=t.amount;else{b.sources[t.source]+=t.amount;cash(t.wallet,t.amount);}break;
    case 'openingInvestment': b.investments[t.id]={id:t.id,note:t.note,date:t.date,cost:t.amount,remaining:t.amount,alloc:{...zero(),capital:t.amount}};break;
-   case 'income': if(!['side','business'].includes(t.source))fail('Invalid income source');b.sources[t.source]+=t.amount;cash(t.wallet,t.amount);e.income=t.amount;e.businessIncome=t.source==='business'?t.amount:0;break;
+   case 'income': if(!['side','business'].includes(t.source))fail('Invalid income source');if(t.source==='business'){b.businessFunds.profit+=t.amount;e.businessIncome=t.amount;}else{b.sources.side+=t.amount;cash(t.wallet,t.amount);e.income=t.amount;}break;
    case 'expense':expense(t);e.expense=t.amount;break;
    case 'invest': b.investments[t.id]={id:t.id,note:t.note,date:t.date,cost:t.amount,remaining:t.amount,alloc:funding(t,t.amount)};break;
    case 'sale':{
@@ -50,8 +52,11 @@ function replay(p){
  b.available=sum(b.wallets);b.invested=Object.values(b.investments).reduce((n,x)=>n+x.remaining,0);
  b.receivable=Object.values(b.sales).reduce((n,x)=>n+x.total-x.paid,0)+Object.values(b.debts).filter(x=>x.kind==='lend').reduce((n,x)=>n+x.total-x.paid,0);
  b.payable=Object.values(b.debts).filter(x=>x.kind==='borrow').reduce((n,x)=>n+x.total-x.paid,0);
- b.businessAvailable=b.sources.capital+b.sources.business;
- b.capital=b.available+b.invested+b.receivable-b.payable;return b;
+ b.businessAvailable=b.businessFunds.capital+b.businessFunds.profit;
+ b.businessReceivable=Object.values(b.sales).reduce((n,x)=>n+x.total-x.paid,0);
+ b.businessCapital=b.businessAvailable+b.invested+b.businessReceivable;
+ b.personalCapital=b.available+b.receivable-b.businessReceivable-b.payable;
+ b.capital=b.personalCapital+b.businessCapital;return b;
 }
 function validate(db){
  if(!db||db.version!==1||!Array.isArray(db.profiles)||db.profiles.length>100||!['en','ru'].includes(db.language))fail('Unsupported backup / Backup durust nahi');
