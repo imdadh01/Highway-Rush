@@ -33,3 +33,5 @@
 
 
 .goat-photo-change{display:block;position:relative;width:100%;padding:0;border:0;background:var(--pale);border-radius:18px;overflow:hidden}.goat-photo-change .photo-large{display:block;margin:0;width:100%}.photo-change-label{position:absolute;bottom:10px;right:10px;display:flex;align-items:center;gap:7px;background:var(--green);color:white;padding:9px 12px;border-radius:12px}.health-overviews{margin:14px 0}.health-overview{margin:0 0 10px;background:var(--pale);border-color:#d6e8dc}.health-overview h3{margin:0 0 12px;color:var(--green)}.health-counts{display:flex;gap:12px;justify-content:space-between}.health-counts>span{flex:1;color:var(--muted);font-size:12px}.health-counts b{display:block;color:var(--green);font-size:24px;margin-top:4px}.health-overview p{margin:12px 0 0;font-size:13px}.schedule-goat{gap:10px}.schedule-goat .thumb{width:44px;height:44px;border-radius:10px;flex-shrink:0}.schedule-goat>span:not(.thumb){flex:1}.schedule-goat .btn{padding:9px 12px;min-width:0}
+
+.health-list .row-main>small{white-space:pre-line}
