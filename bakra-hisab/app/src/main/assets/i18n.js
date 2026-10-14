@@ -510,7 +510,7 @@ const englishText={
  "Sale se linked baqi bakray dobara stock mein aayenge.": "Other goats linked to the sale will return to stock.",
  "Yeh salary credit hai. Di hui payment mulazim ki book mein alag edit karein.": "This is accrued salary. Edit actual payments separately in the employee account.",
  "band karein": "close",
- "Bakra Hisab 1.3.10 · Personal-use build. Photos aur financial records aapke phone mein. Reset/uninstall se pehle backup phone ke bahar rakhein.": "Bakra Hisab 1.3.10 · Personal-use build. Photos and financial records are stored on your phone. Keep a backup outside the phone before resetting or uninstalling.",
+ "Bakra Hisab 1.3.11 · Personal-use build. Photos aur financial records aapke phone mein. Reset/uninstall se pehle backup phone ke bahar rakhein.": "Bakra Hisab 1.3.11 · Personal-use build. Photos and financial records are stored on your phone. Keep a backup outside the phone before resetting or uninstalling.",
  "Photo badlein": "Change photo",
  "Transport, Kiraya aur Mandi fees": "Transport, rent and market fees",
  "Transport / Kiraya / Mandi fee ka hissa aur payment bill se zyada nahi ho sakte.": "Transport, rent and market fee shares and payments cannot exceed the bill.",
@@ -524,7 +524,15 @@ const englishText={
  "din baqi": "days remaining",
  "din late": "days overdue",
  "Schedule nahi": "Not scheduled",
- "Dawa di:": "Given on:"
+ "Dawa di:": "Given on:",
+ "Photo kholo": "Open photo",
+ "Crop aur preview": "Crop and preview",
+ "Photo ko drag karein aur zoom se crop set karein.": "Drag the photo and adjust zoom to crop.",
+ "Lagney ke baad preview": "Saved photo preview",
+ "Photo save karein": "Save photo",
+ "Photo save nahi hui. Dobara try karein.": "Could not save the photo. Try again.",
+ "System mode phone ki theme ke mutabiq badalta hai.": "System mode follows your phone’s theme.",
+ "Bakron ki kharid, sale, kharchay, medical records aur farm ke hisab ki offline app.": "An offline app for goat purchases, sales, expenses, medical records and farm accounts."
 };
 
 // Translate presentation only; persisted records, option values and action IDs stay intact.
