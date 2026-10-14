@@ -52,3 +52,5 @@
 [data-theme="dark"] .search{color:var(--ink)}
 @media print{html[data-theme="dark"]{--ink:#172b22;--muted:#52665a;--line:#ddd;--pale:#edf5ef;--green:#096347;--surface:white;color-scheme:light}html[data-theme="dark"] #printDocument :is(.card,.health-overview){background:white;color:#172b22;border-color:#ddd}}
 [data-theme="dark"] .health-reminder{background:#192a20;border-color:var(--line)}
+
+.photo-overlay{padding:8px}.crop-dialog{width:min(calc(100vw - 16px),640px);flex-shrink:0}.crop-scroll{padding:12px}.crop-scroll canvas{width:var(--crop-width);max-width:100%;aspect-ratio:var(--crop-aspect);margin:auto}.crop-thumb-only{justify-content:center}.crop-thumb-only .thumb{width:58px;height:58px}
