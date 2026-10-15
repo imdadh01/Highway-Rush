@@ -56,3 +56,6 @@
 .photo-overlay{padding:8px}.crop-dialog{width:min(calc(100vw - 16px),640px);flex-shrink:0}.crop-scroll{padding:12px}.crop-scroll canvas{width:var(--crop-width);max-width:100%;aspect-ratio:var(--crop-aspect);margin:auto}.crop-thumb-only{justify-content:center}.crop-thumb-only .thumb{width:58px;height:58px}
 
 .photo-buttons{flex-wrap:wrap}
+
+/* Keep the complete saved photo visible in every goat thumbnail. */
+img.thumb{object-fit:contain;object-position:center}
