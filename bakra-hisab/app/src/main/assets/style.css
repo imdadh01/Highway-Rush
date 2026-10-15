@@ -57,5 +57,5 @@
 
 .photo-buttons{flex-wrap:wrap}
 
-/* Keep the complete saved photo visible in every goat thumbnail. */
-img.thumb{object-fit:contain;object-position:center}
+/* Fill goat thumbnail boxes using the original photo fitting. */
+img.thumb{object-fit:cover;object-position:center}
