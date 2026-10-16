@@ -1,0 +1,22 @@
+{
+  "classes.dex": {
+    "methods": 49760,
+    "constructors": 8220,
+    "errors": []
+  },
+  "classes2.dex": {
+    "methods": 55890,
+    "constructors": 10029,
+    "errors": []
+  },
+  "classes3.dex": {
+    "methods": 56159,
+    "constructors": 9145,
+    "errors": []
+  },
+  "classes4.dex": {
+    "methods": 29055,
+    "constructors": 5824,
+    "errors": []
+  }
+}

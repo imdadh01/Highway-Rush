@@ -1,12 +1,22 @@
-# Gallery compatibility testing
+# Gallery port for nubia Neo 2 (Android 13)
 
-This directory is isolated from the Highway Rush and Mera Hisaab apps.
-The candidate is a personal-use Xiaomi Gallery compatibility build for Android 13.
-It remains unverified until the runtime workflow passes.
+Gallery files and workflow are isolated here from the repository's other apps.
 
-The compressed candidate is stored in payload parts. `restore.py` reconstructs
-the APK and verifies both compressed and APK SHA-256 hashes. No signing keys are included.
+## v4 correction
 
-The workflow tests installation, home startup, rendering two generated local photos,
-opening a photo, album navigation, and stability on an Android 13 emulator.
-Passing this test does not verify every Gallery feature or the physical Nubia firmware.
+The device rejected v3 before starting the application:
+`Direct/virtual method ... MiCloudSettings;.<init> not in expected list 0`.
+All 33 generated constructors in 31 compatibility classes lacked the DEX
+constructor access flag. Correcting the declarations places them in the direct
+method list. The generator now emits the flag as well.
+
+The structural check reports 33 constructor errors for v3 and zero for the
+unmodified original and corrected v4. CI also loads the candidate's DEX in the
+real Android 13 runtime and links GalleryApp, FeatureParser, MiCloudSettings and
+HomePageActivity. This test does not initialize Gallery or test the UI or native
+ARM64 features. The available x86_64 emulator cannot perform the full ARM64
+Gallery smoke test; `tests/smoke.py` remains available for a compatible device.
+
+The original compressed candidate payload is retained as an immutable base.
+`restore.py` applies a SHA-256 checked binary delta to reconstruct signed v4.
+No signing private key is published. Device testing is still required.

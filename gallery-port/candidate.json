@@ -1,7 +1,12 @@
 {
   "file_size": 101208813,
-  "sha256": "467009236834b66ed03843ea5f7618f9791f9f8b24a8230d02b749ccfd33fbfe",
+  "sha256": "3cc080512dbdfc3b7fa1c4e0d481fee7ab8ba219c106f0f9fbee1b926de1f766",
+  "base_sha256": "467009236834b66ed03843ea5f7618f9791f9f8b24a8230d02b749ccfd33fbfe",
   "payload_size": 76738440,
   "payload_sha256": "c069c964a18f409a9f6caec064044f42bea571154d6ee093be64de30e96b449e",
-  "chunk_size": 737280
+  "patch_sha256": "a27f8086d0547797c63b2bb5200b7f3d6ccf032d9034c6dc6fa60a6352959194",
+  "patches": [
+    "patches/v4-part-0.bsdiff",
+    "patches/v4-part-1.bsdiff"
+  ]
 }

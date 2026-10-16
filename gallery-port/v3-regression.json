@@ -1,0 +1,56 @@
+{
+  "classes.dex": {
+    "methods": 49759,
+    "constructors": 8220,
+    "errors": [
+      "Lcom/xiaomi/micloudsdk/provider/MiCloudSettings;-><init>: constructor access flag/name mismatch",
+      "Lcom/xiaomi/micloudsdk/sync/utils/SyncContentUtils;-><init>: constructor access flag/name mismatch",
+      "Lcom/xiaomi/micloudsdk/utils/AESStringDef$InvalidAESDataException;-><init>: constructor access flag/name mismatch",
+      "Lcom/xiaomi/micloudsdk/utils/AESStringDef$InvalidAESDataException;-><init>: constructor access flag/name mismatch",
+      "Lcom/xiaomi/micloudsdk/utils/IXiaomiAccountServiceProxy;-><init>: constructor access flag/name mismatch",
+      "Lmiui/accounts/ExtraAccountManager;-><init>: constructor access flag/name mismatch",
+      "Lmiui/app/MiuiFreeFormManager$MiuiFreeFormStackInfo;-><init>: constructor access flag/name mismatch",
+      "Lmiui/app/MiuiFreeFormManager;-><init>: constructor access flag/name mismatch",
+      "Lmiui/cloud/content/MiSyncPolicyResolver;-><init>: constructor access flag/name mismatch",
+      "Lmiui/cloud/os/ServiceManager;-><init>: constructor access flag/name mismatch",
+      "Lmiui/cloud/os/SystemProperties;-><init>: constructor access flag/name mismatch",
+      "Lmiui/cloud/sync/SyncInfoProviderBase;-><init>: constructor access flag/name mismatch",
+      "Lmiui/cloud/sync/providers/AntispamSyncInfoProvider;-><init>: constructor access flag/name mismatch",
+      "Lmiui/cloud/sync/providers/BrowserSyncInfoProvider;-><init>: constructor access flag/name mismatch",
+      "Lmiui/cloud/sync/providers/CalendarSyncInfoProvider;-><init>: constructor access flag/name mismatch",
+      "Lmiui/cloud/sync/providers/CalllogSyncInfoProvider;-><init>: constructor access flag/name mismatch",
+      "Lmiui/cloud/sync/providers/ContactsSyncInfoProvider;-><init>: constructor access flag/name mismatch",
+      "Lmiui/cloud/sync/providers/GallerySyncInfoProvider;-><init>: constructor access flag/name mismatch",
+      "Lmiui/cloud/sync/providers/NotesSyncInfoProvider;-><init>: constructor access flag/name mismatch",
+      "Lmiui/cloud/sync/providers/PersonalAssistantSyncInfoProvider;-><init>: constructor access flag/name mismatch",
+      "Lmiui/cloud/sync/providers/QuickSearchBoxProvider;-><init>: constructor access flag/name mismatch",
+      "Lmiui/cloud/sync/providers/SmsSyncInfoProvider;-><init>: constructor access flag/name mismatch",
+      "Lmiui/cloud/sync/providers/SoundRecorderSyncInfoProvider;-><init>: constructor access flag/name mismatch",
+      "Lmiui/cloud/sync/providers/WifiSyncInfoProvider;-><init>: constructor access flag/name mismatch",
+      "Lmiui/content/pm/PreloadedAppPolicy;-><init>: constructor access flag/name mismatch",
+      "Lmiui/hardware/display/DisplayFeatureManager;-><init>: constructor access flag/name mismatch",
+      "Lmiui/os/Build;-><init>: constructor access flag/name mismatch",
+      "Lmiui/provider/ExtraNetwork;-><init>: constructor access flag/name mismatch",
+      "Lmiui/securityspace/CrossUserUtils;-><init>: constructor access flag/name mismatch",
+      "Lmiui/util/FeatureParser;-><init>: constructor access flag/name mismatch",
+      "Lmiui/util/HapticFeedbackUtil;-><init>: constructor access flag/name mismatch",
+      "Lmiui/util/HapticFeedbackUtil;-><init>: constructor access flag/name mismatch",
+      "Lmiui/util/ReflectionUtils;-><init>: constructor access flag/name mismatch"
+    ]
+  },
+  "classes2.dex": {
+    "methods": 55890,
+    "constructors": 10029,
+    "errors": []
+  },
+  "classes3.dex": {
+    "methods": 56159,
+    "constructors": 9145,
+    "errors": []
+  },
+  "classes4.dex": {
+    "methods": 29055,
+    "constructors": 5824,
+    "errors": []
+  }
+}
