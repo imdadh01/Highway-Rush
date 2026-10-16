@@ -1,11 +1,6 @@
 name: Gallery Android 13 DEX loading check
 on:
   workflow_dispatch:
-  push:
-    branches: [gallery/nubia-android13-tests]
-    paths:
-      - 'gallery-port/**'
-      - '.github/workflows/gallery-android13.yml'
 permissions:
   contents: read
 jobs:
