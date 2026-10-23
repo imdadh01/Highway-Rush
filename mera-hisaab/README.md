@@ -53,7 +53,7 @@ The signing key and password are intentionally excluded from source and must nev
 
 This app lives in the `mera-hisaab/` folder of the existing `imdadh01/Highway-Rush` repository. Open this folder as the Android project; the root project is the separate Highway Rush game.
 
-[Download Mera Hisaab 1.4.0 APK](downloads/Mera-Hisaab-1.4.0.apk?raw=true)
+[Download Mera Hisaab 1.4.1 APK](downloads/Mera-Hisaab-1.4.1.apk?raw=true)
 
 The nested `.github/workflows/android-release.yml` is a future build template, not an active workflow. Before activating it at the repository root, remove its push trigger, set run working-directory to `mera-hisaab`, prefix artifact paths with `mera-hisaab/`, use unique release tags, and rename its signing secrets to `MERA_HISAAB_KEYSTORE_BASE64` and `MERA_HISAAB_KEYSTORE_PASSWORD`. Configure those secrets from the ORIGINAL private backup. Never use the game's signing key. No signing secrets have been configured by this upload.
 
@@ -82,3 +82,7 @@ Investment add/edit requires an explicit choice of historical (already invested)
 ## Version 1.4.0 — business and personal separation
 
 Business sales and business income replay into a distinct cash ledger, never personal wallets or personal income totals. Historical investments affect stock only. Personal income remains in Cash + Banks. Expense entry chooses BOTH classification (personal expense vs business investment) and payment balance (personal vs business). Business expenses create linked-sale-capable investment lots and never contribute to expense totals. Personal expenses paid from business cash still count as personal expenses. Sale receipts recover business capital first, then business profit; unpaid balances remain business receivables. Existing explicit business-funded investments remain business-funded; legacy automatic investment funding defaults to personal. Existing personal payments previously supported by mixed business receipts can consequently show a negative personal balance and can be edited to the intended payment scope. New investment defaults to business balance. No tests run.
+
+## Version 1.4.1
+
+Restore Side Income, Business Profit, Invested Total and Business Available summaries on the home balance card. Business metrics are displayed as summaries only; the main available balance remains personal Cash + Banks. Signed with the original key. No tests run.
