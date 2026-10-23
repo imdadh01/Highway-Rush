@@ -23,9 +23,13 @@ jobs:
       - name: Package only (no tests)
         env:
           BUILD_UNSIGNED: 'true'
-        run: bash mera-hisaab/scripts/build-sdk.sh
+        run: |
+          bash mera-hisaab/scripts/build-sdk.sh
+          cp "$ANDROID_SDK_ROOT/build-tools/35.0.0/lib/apksigner.jar" mera-hisaab/app/build/direct/apksigner.jar
       - uses: actions/upload-artifact@v4
         with:
-          name: Mera-Hisaab-1.4.0-unsigned
-          path: mera-hisaab/app/build/direct/aligned.apk
+          name: Mera-Hisaab-1.4.1-unsigned
+          path: |
+            mera-hisaab/app/build/direct/aligned.apk
+            mera-hisaab/app/build/direct/apksigner.jar
           retention-days: 7
