@@ -18,3 +18,6 @@ body{background:#fff}.shell:before{display:none}.profile{background:#faf9fc;bord
 
 /* 1.4: personal account surface, separate business ledger. */
 .balance .bigmoney{padding-right:0;font-size:clamp(30px,8.4vw,45px)}.balance .sources{grid-template-columns:repeat(2,minmax(0,1fr))}.btn.expense-save{background:#FF6839;color:white;box-shadow:0 6px 18px #ff683933}#scopeWallet[hidden]{display:none!important}
+
+/* 1.4.1: restore home summaries while keeping ledger totals separate. */
+.balance .sources{grid-template-columns:repeat(3,minmax(0,1fr))}.balance .bigmoney{padding-right:118px;font-size:clamp(24px,6.7vw,38px)}.business-available{position:absolute;right:17px;top:66px;width:112px;text-align:right;color:white;line-height:1.35}.business-available span{font-size:10px;display:block;color:#ffffffdb}.business-available strong{display:block;font-size:14px;font-weight:700;overflow-wrap:anywhere;margin-top:3px}
