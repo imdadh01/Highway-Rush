@@ -28,7 +28,7 @@ jobs:
           cp "$ANDROID_SDK_ROOT/build-tools/35.0.0/lib/apksigner.jar" mera-hisaab/app/build/direct/apksigner.jar
       - uses: actions/upload-artifact@v4
         with:
-          name: Mera-Hisaab-1.4.1-unsigned
+          name: Mera-Hisaab-1.5.0-unsigned
           path: |
             mera-hisaab/app/build/direct/aligned.apk
             mera-hisaab/app/build/direct/apksigner.jar

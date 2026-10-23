@@ -53,7 +53,7 @@ The signing key and password are intentionally excluded from source and must nev
 
 This app lives in the `mera-hisaab/` folder of the existing `imdadh01/Highway-Rush` repository. Open this folder as the Android project; the root project is the separate Highway Rush game.
 
-[Download Mera Hisaab 1.4.1 APK](downloads/Mera-Hisaab-1.4.1.apk?raw=true)
+[Download Mera Hisaab 1.5.0 APK](downloads/Mera-Hisaab-1.5.0.apk?raw=true)
 
 The nested `.github/workflows/android-release.yml` is a future build template, not an active workflow. Before activating it at the repository root, remove its push trigger, set run working-directory to `mera-hisaab`, prefix artifact paths with `mera-hisaab/`, use unique release tags, and rename its signing secrets to `MERA_HISAAB_KEYSTORE_BASE64` and `MERA_HISAAB_KEYSTORE_PASSWORD`. Configure those secrets from the ORIGINAL private backup. Never use the game's signing key. No signing secrets have been configured by this upload.
 
@@ -86,3 +86,7 @@ Business sales and business income replay into a distinct cash ledger, never per
 ## Version 1.4.1
 
 Restore Side Income, Business Profit, Invested Total and Business Available summaries on the home balance card. Business metrics are displayed as summaries only; the main available balance remains personal Cash + Banks. Signed with the original key. No tests run.
+
+## Version 1.5.0
+
+Apply approved UI previews: full-width horizontal Settings action rows with icons, compact aligned income/expense average table and income breakdown, formula details behind an info dialog, and a Business dashboard with gradient cash card, capital/profit split, stock and capital metrics, period summary and clear investment/sale actions. No shield badge or explanatory footer. Layout adapts to device height, scrolls when needed and reserves space above bottom navigation. All values remain live ledger values; financial rules and data format are unchanged. Original signing key retained. No tests run.
