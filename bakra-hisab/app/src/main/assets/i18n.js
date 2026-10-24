@@ -510,7 +510,7 @@ const englishText={
  "Sale se linked baqi bakray dobara stock mein aayenge.": "Other goats linked to the sale will return to stock.",
  "Yeh salary credit hai. Di hui payment mulazim ki book mein alag edit karein.": "This is accrued salary. Edit actual payments separately in the employee account.",
  "band karein": "close",
- "Bakra Hisab 1.3.17 · Personal-use build. Photos aur financial records aapke phone mein. Reset/uninstall se pehle backup phone ke bahar rakhein.": "Bakra Hisab 1.3.17 · Personal-use build. Photos and financial records are stored on your phone. Keep a backup outside the phone before resetting or uninstalling.",
+ "Bakra Hisab 1.3.18 · Personal-use build. Photos aur financial records aapke phone mein. Reset/uninstall se pehle backup phone ke bahar rakhein.": "Bakra Hisab 1.3.18 · Personal-use build. Photos and financial records are stored on your phone. Keep a backup outside the phone before resetting or uninstalling.",
  "Photo badlein": "Change photo",
  "Transport, Kiraya aur Mandi fees": "Transport, rent and market fees",
  "Transport / Kiraya / Mandi fee ka hissa aur payment bill se zyada nahi ho sakte.": "Transport, rent and market fee shares and payments cannot exceed the bill.",
@@ -538,7 +538,18 @@ const englishText={
  "Bakra counter": "Goat counter",
  "Tick kiye": "Checked",
  "Sirf ginti — koi medical record save nahi hoga.": "Temporary count only — no medical record is saved.",
- "Baqi schedule dose pehle complete karein.": "Complete the remaining scheduled doses first."
+ "Baqi schedule dose pehle complete karein.": "Complete the remaining scheduled doses first.",
+ "Pehli dose aur linked agli doses mil kar aik course hain.": "The first dose and its linked follow-up doses form one course.",
+ "Course mukammal bakray": "Goats with completed courses",
+ "Mukammal courses:": "Completed courses:",
+ "Baqi bakray": "Remaining goats",
+ "Course baqi": "Course pending",
+ "Pehli dose": "First dose",
+ "baar": "times",
+ "+ Naya course": "+ New course",
+ "Is bakray ka koi course record nahi.": "No course is recorded for this goat.",
+ "Koi bakra is list mein nahi.": "No goats in this list.",
+ "Pehli dose aur usi record ki linked doses aik course hain. Count sirf mukammal course ka hai.": "The first dose and linked doses of the same record form one course. Only completed courses are counted."
 };
 
 // Translate presentation only; persisted records, option values and action IDs stay intact.
