@@ -1,31 +1,33 @@
-# Amber Launcher
+# Amber Launcher 2.0
 
-A completely new native Android home launcher inspired by the supplied first screenshot, using the standard Android sans-serif font. No code, assets, dependencies or workflows from Highway-Rush are used. This branch contains only the new launcher project; main is unchanged.
+A native Android launcher with the supplied kitten-home composition and a full-window, density-aware app drawer. This independent branch does not use the original repository application.
 
-## Install
-Download `Amber-Launcher-APK` from this branch's GitHub Actions run, unzip it and install `Amber-Launcher.apk`. Allow installation from your browser/file manager when Android asks. Open Amber Launcher and long-press an empty area → **Set as default home**.
+## What changed in 2.0
+- Full-screen 4/5-column app grid, 54dp icons, two-line labels and search with empty states.
+- Alphabet rail with tap/drag navigation, A–Z sorting, local launch-count sorting and favorites.
+- Independent icon drawables for home and drawer: drawing a home icon no longer changes the drawer icon bounds.
+- Launchable app discovery off the UI thread; refresh on app install, removal, changes and resume.
+- Long-press app actions: add to home, favorite, folder, app info, Android-confirmed uninstall and hide from drawer.
+- A second home page with up to 20 shortcuts/folders, drag-to-reorder, rename/edit folders and remove shortcuts.
+- Home and dock shortcuts can be reassigned or removed; folders and settings persist across restarts.
+- Navigation-bar inset handling keeps the dock above the system controls.
+- Optional manual weather text, 12/24-hour clock, custom wallpaper and default-home selection.
 
-## Features
-- Reconstructed warm kitten wallpaper, live local clock and date.
-- Search, voice-search intent and Google Lens web shortcut.
-- Reference-positioned calculator, 2×2 suggestions panel, gallery, Google folder, vertical productivity panel and five-app glass dock.
-- Launch installed apps; long-press a shortcut to assign a different installed app.
-- Swipe up or sideways, or tap the page indicator, for a searchable app drawer.
-- Long-press an app in the drawer for Android app info.
-- Long-press home for default-launcher selection, a custom wallpaper picker, manual weather text or layout reset.
-- Android supplies the real status/navigation bars. No fake unread counts.
+## Use
+Swipe up for all apps. Swipe left on home for Your apps, or right to return to the reference home. Long-press a drawer app to add it to home. On Your apps, hold then drag an icon to move it; hold and release to open its menu. Long-press an empty home area for settings. Folder membership is edited through its menu. Hidden apps can be restored through the drawer menu or home settings.
 
-## Design limits
-Wallpaper is AI-reconstructed from the reference, not the exact original wallpaper. Installed app icons come from the device and can vary. Colored fallback icons are shown for missing apps; tapping one opens the app picker. Weather is explicitly manual (blank until configured); it is not a live feed. AI Suggestions is a fixed, editable four-shortcut panel, not an AI service. The app does not replace Android's lock screen or system control center. Target SDK 28 preserves the reference's system-bar layout on newer Android; this is a sideload build, not a Play Store submission.
+## Install and build
+The GitHub Actions artifact contains Amber-Launcher.apk. If Android rejects an update over version 1 because the debug signing key differs, uninstall version 1 first; its launcher layout preferences will be cleared. From version 2, CI caches its debug signing key for subsequent builds while the cache exists.
 
-## Build
-Java 17, Android SDK 35, Gradle 8.9, Android Gradle Plugin 8.7.3.
+Java 17, Gradle 8.9, Android SDK 35 and AGP 8.7.3:
 
 ```
 gradle :app:assembleDebug -x test -x lint --no-daemon
 ```
 
-The GitHub workflow runs only APK assembly and artifact upload. No unit, instrumentation, UI, or lint tests are run, per request. The APK uses Android's debug signing for installation; subsequent CI builds may use a new debug key and require uninstalling the previous build.
+Only APK compilation/packaging is performed. No unit, UI, instrumentation, emulator or lint tests are run, per the user's instruction. Runtime behavior on a device has not been verified.
 
-## Asset provenance
-`app/src/main/assets/wallpaper.jpg` was created using the built-in image-generation tool from the user-supplied screenshot. Prompt: remove all status, clock, date, weather, search, icons, folders, dock and navigation UI; reconstruct the underlying kitten wallpaper while preserving its warm palette, pose, composition and blurred room, with no text or symbols.
+## Scope
+The drawer shows enabled launchable apps in the current Android user profile, not background-only packages. Most-used sorting counts launches through Amber only. Hidden apps remain installed and are not password-protected. System apps may not support uninstall. Weather is manual, not live. The four reference suggestions are editable shortcuts, not an AI service. Third-party widget hosting, notification badges, work-profile management, lock-screen replacement and system control-center replacement are not included.
+
+The kitten wallpaper was reconstructed from the supplied screenshot using the built-in image-generation tool: remove UI and reconstruct the kitten/background while preserving pose, composition and warm palette. Installed icons vary by device. Target SDK 28 preserves the home system-bar layout for this sideload build; this is not a Play Store submission.
