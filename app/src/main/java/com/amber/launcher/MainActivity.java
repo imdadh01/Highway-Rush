@@ -34,6 +34,7 @@ public class MainActivity extends Activity {
         root.setOnDragListener((v,e)->home.drag(e));
     }
     void homeBars(){getWindow().setStatusBarColor(Color.TRANSPARENT);getWindow().setNavigationBarColor(Color.TRANSPARENT);getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN|View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION|View.SYSTEM_UI_FLAG_LAYOUT_STABLE);}
+    void panelBars(){int flags=View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN|View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION|View.SYSTEM_UI_FLAG_LAYOUT_STABLE;if(ink()!=Color.WHITE&&opacity()>50)flags|=View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR|View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR;getWindow().getDecorView().setSystemUiVisibility(flags);}
     @Override protected void onResume(){super.onResume();loadApps();handler.removeCallbacks(tick);handler.post(tick);}
     @Override protected void onPause(){super.onPause();handler.removeCallbacks(tick);}
     @Override protected void onDestroy(){super.onDestroy();unregisterReceiver(changes);loader.shutdownNow();handler.removeCallbacksAndMessages(null);}
@@ -48,7 +49,7 @@ public class MainActivity extends Activity {
     void launch(App a){if(a==null){toast("App is no longer installed");return;}String key="use:"+appId(a);prefs.edit().putInt(key,prefs.getInt(key,0)+1).apply();start(new Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_LAUNCHER).setComponent(new ComponentName(a.pkg,a.cls)).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));}
     void toast(String s){Toast.makeText(this,s,Toast.LENGTH_SHORT).show();}
     void openDrawer(){openFolder(null);}
-    void openFolder(Workspace.Item folder){closeDrawer();drawer=new AppDrawer(this,folder);root.addView(drawer,new FrameLayout.LayoutParams(-1,-1));drawer.setAlpha(0);drawer.animate().alpha(1).setDuration(140).start();}
+    void openFolder(Workspace.Item folder){closeDrawer();drawer=new AppDrawer(this,folder);panelBars();root.addView(drawer,new FrameLayout.LayoutParams(-1,-1));drawer.setAlpha(0);drawer.animate().alpha(1).setDuration(140).start();}
     void closeDrawer(){if(drawer!=null){((android.view.inputmethod.InputMethodManager)getSystemService(INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(drawer.getWindowToken(),0);root.removeView(drawer);drawer=null;}homeBars();home.invalidate();}
     void startDrag(View source,DragData data){
         App a=byId(data.app);View.DragShadowBuilder shadow;
@@ -100,7 +101,7 @@ public class MainActivity extends Activity {
         TextView done=button("Done");box.addView(done,new LinearLayout.LayoutParams(-1,dp(48)));done.setOnClickListener(v->d.dismiss());d.setContentView(box);d.getWindow().setBackgroundDrawableResource(android.R.color.transparent);d.getWindow().setGravity(Gravity.BOTTOM);d.show();d.getWindow().setLayout(getResources().getDisplayMetrics().widthPixels,-2);
     }
     void addSlider(LinearLayout box,String title,String key,int defaultValue){TextView label=text(title+" · "+prefs.getInt(key,defaultValue)+"%",14,ink());LinearLayout.LayoutParams lp=new LinearLayout.LayoutParams(-1,dp(42));lp.topMargin=dp(10);box.addView(label,lp);SeekBar slider=new SeekBar(this);slider.setMax(100);slider.setProgress(prefs.getInt(key,defaultValue));slider.setProgressTintList(android.content.res.ColorStateList.valueOf(ink()));slider.setThumbTintList(android.content.res.ColorStateList.valueOf(ink()));box.addView(slider,new LinearLayout.LayoutParams(-1,dp(44)));slider.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener(){public void onProgressChanged(SeekBar s,int value,boolean user){if(user){prefs.edit().putInt(key,value).apply();label.setText(title+" · "+value+"%");refreshAppearance();}}public void onStartTrackingTouch(SeekBar s){}public void onStopTrackingTouch(SeekBar s){}});}
-    void refreshAppearance(){home.invalidate();if(drawer!=null)drawer.refreshTheme();}
+    void refreshAppearance(){home.invalidate();if(drawer!=null){panelBars();drawer.refreshTheme();}}
     void loadWallpaper(){String uri=prefs.getString("wallpaper","");try(java.io.InputStream in=uri.isEmpty()?getAssets().open("wallpaper.jpg"):getContentResolver().openInputStream(Uri.parse(uri))){BitmapFactory.Options o=new BitmapFactory.Options();o.inSampleSize=2;Bitmap b=BitmapFactory.decodeStream(in,null,o);if(b!=null)wallpaper=b;}catch(Exception e){try(java.io.InputStream in=getAssets().open("wallpaper.jpg")){wallpaper=BitmapFactory.decodeStream(in);}catch(Exception ignored){}}}
     @Override protected void onActivityResult(int req,int result,Intent data){super.onActivityResult(req,result,data);if(req==9&&result==RESULT_OK&&data!=null&&data.getData()!=null){Uri uri=data.getData();try{getContentResolver().takePersistableUriPermission(uri,Intent.FLAG_GRANT_READ_URI_PERMISSION);prefs.edit().putString("wallpaper",uri.toString()).apply();loadWallpaper();home.invalidate();}catch(Exception e){toast("Unable to open wallpaper");}}}
 }
